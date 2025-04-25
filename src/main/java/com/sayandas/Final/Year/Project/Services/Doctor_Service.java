@@ -14,7 +14,7 @@ public class Doctor_Service {
     public Doctors addDoctor(Doctors doctor) {
         return doctorRepository.save(doctor);
     }
-    public Doctors showDoctor(int id) {
+    public Doctors showDoctor(Integer id) {
         return doctorRepository.findById(id).get();
     }
 }

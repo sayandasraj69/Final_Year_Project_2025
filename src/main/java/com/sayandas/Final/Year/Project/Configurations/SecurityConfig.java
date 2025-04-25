@@ -22,12 +22,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                      .csrf(customizer -> customizer.disable())
-                     .authorizeHttpRequests(request -> request.anyRequest().authenticated())
-                     .httpBasic(Customizer.withDefaults())
+                     .authorizeHttpRequests(request -> request
+                            .requestMatchers("/", "/index.html", "/views/RegistrationViews/**", "/views/Login_Views/**", "/views/Profile_Views/**",
+                                    "/doctor/register", "/doctor/register-submit", "/doctor/login").permitAll() // Allow access to index.html without authentication
+                            .anyRequest().authenticated()
+                     )
+                    .formLogin(httpForm -> httpForm
+                            .loginPage("/doctor/login").permitAll())
                      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                      .build();
     }
 
+    @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
