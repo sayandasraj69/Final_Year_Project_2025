@@ -14,26 +14,25 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                     .csrf(customizer -> customizer.disable())
-                     .authorizeHttpRequests(request -> request
-                            .requestMatchers("/", "/index.html", "/views/RegistrationViews/**", "/views/Login_Views/**", "/views/Profile_Views/**",
-                                    "/doctor/register", "/doctor/register-submit", "/doctor/login").permitAll() // Allow access to index.html without authentication
-                            .anyRequest().authenticated()
-                     )
-                    .formLogin(httpForm -> httpForm
-                            .loginPage("/doctor/login").permitAll())
-                     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                     .build();
+                .csrf(customizer -> customizer.disable())
+                .formLogin(httpform -> httpform.loginPage("/doctor/login").permitAll())
+                .authorizeHttpRequests(registry -> {
+//                        registry.requestMatchers("/register","views/Login_Views/**").permitAll();
+                        registry.anyRequest().authenticated();
+                        })
+
+                .build();
+
     }
 
-    @Bean
+//    @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());

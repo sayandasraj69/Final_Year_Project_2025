@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Controller
 //@RestController
-@RequestMapping("doctor")
+@RequestMapping("/doctor")
 public class Doctor_Controller {
     @Autowired
     Doctor_Service doctorService;
@@ -54,7 +54,8 @@ public class Doctor_Controller {
     @GetMapping("/login")
     public String showLoginPage (Model model){
 
-        return "Login_Views/doctor_Login";
+//        return "Login_Views/doctor_Login";
+        return "login";
     }
 
     @PostMapping("/login-submit")

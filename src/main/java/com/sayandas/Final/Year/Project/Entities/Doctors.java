@@ -18,7 +18,7 @@ public class Doctors {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotBlank(message = "password is mandatory")
-    @Size(message = "minimum 8 characters required")
+    @Size(min = 8, message = "minimum 8 characters required")
     private String password;
     @NotBlank
     private String name;
