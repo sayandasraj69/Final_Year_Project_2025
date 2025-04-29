@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-//@Service
+@Service
 class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private Doctor_Repository doctorRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Doctors doctor = doctorRepository.findByName(username);
+        Doctors doctor = doctorRepository.findByUsername(username);
         if (doctor == null) {
             throw new UsernameNotFoundException("Doctor not found");
         }

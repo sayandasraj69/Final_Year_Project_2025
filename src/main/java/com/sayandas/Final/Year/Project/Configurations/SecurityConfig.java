@@ -22,9 +22,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(customizer -> customizer.disable())
-                .formLogin(httpform -> httpform.loginPage("/doctor/login").permitAll())
+                .formLogin(httpform -> httpform
+                        .loginPage("/doctor/login")
+                        .defaultSuccessUrl("/doctor/profile")
+                        .loginProcessingUrl("/doctor/verify-login")
+                        .failureUrl("/doctor/login?error=true")
+                        .permitAll())
                 .authorizeHttpRequests(registry -> {
-//                        registry.requestMatchers("/register","views/Login_Views/**").permitAll();
+                        registry.requestMatchers("/doctor/register", "/doctor/add-doctor").permitAll();
                         registry.anyRequest().authenticated();
                         })
 
@@ -32,7 +37,7 @@ public class SecurityConfig {
 
     }
 
-//    @Bean
+    @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());

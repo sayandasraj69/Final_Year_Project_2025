@@ -19,13 +19,17 @@ public class Doctor_Controller {
     @Autowired
     Doctor_Service doctorService;
     @PostMapping("/add-doctor")
-    private ResponseEntity<Doctors> addDoctor(@Valid @ModelAttribute("doctor") Doctors doctor) {
+    private String addDoctor(@Valid @ModelAttribute("doctor") Doctors doctor, Model model) {
+        System.out.println(doctor);
         Doctors savedDoctor = doctorService.addDoctor(doctor);
-        if (savedDoctor != null)
-            return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        return "Registered successfully";
+        if (savedDoctor != null){
+            model.addAttribute("SuccessMessage", "Doctor registered successfully");
+            return "redirect:/LoginViews/DoctorLogin";
+        }
+        else {
+            model.addAttribute("ErrorMessage", "Doctor registration failed");
+            return "redirect:/RegisterViews/DoctorRegister";
+        }
     }
 
 //    @GetMapping("/")
@@ -34,9 +38,9 @@ public class Doctor_Controller {
 //    }
 
     @GetMapping("/register")
-    public String register(@RequestParam(required = false) String success, Model model) {
+    public String register(Model model) {
         model.addAttribute("doctor", new Doctors());
-        return "RegistrationViews/doctor";
+        return "/RegisterViews/DoctorRegister";
     }
 
     @PostMapping("/register-submit")
@@ -53,19 +57,18 @@ public class Doctor_Controller {
 
     @GetMapping("/login")
     public String showLoginPage (Model model){
-
-//        return "Login_Views/doctor_Login";
-        return "login";
+        model.addAttribute("doctor", new Doctors());
+        return "/LoginViews/DoctorLogin";
     }
 
-    @PostMapping("/login-submit")
-    private String submitDoctorLogin(){
-        return "redirect:/doctor/profile";
-    }
+//    @PostMapping("/login-submit")
+//    private String submitDoctorLogin(Model model){
+//        return "redirect:/doctor/profile";
+//    }
 
-    @PostMapping("/profile")
+    @GetMapping("/profile")
     public String showProfilePage() {
-        return "Profile_Views/Doctor_Profile";
+        return "/ProfileViews/DoctorProfile";
     }
 
     @GetMapping("/show-doctor/{id}")

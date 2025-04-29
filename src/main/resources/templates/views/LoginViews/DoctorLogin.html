@@ -88,26 +88,21 @@
         </nav>
     </header> -->
 <div class="home">
+    <form action="/doctor/verify-login" method="post">
     <div class="container container_form">
-        <h4>DOCTOR'S REGISTRATION </h4>
+        <h4>DOCTOR'S LOGIN </h4>
         <div>
-            <input type="text" class="input-box" name="name" id="name" placeholder="enter your name " required>
+            <input type="text" class="input-box" name="username" id="username" placeholder="enter your name " required>
         </div>
         <div>
-            <input type="email" class="input-box" name="email" id="email" placeholder="enter your Email" required>
+            <input type="password" class="input-box" name="password" id="password" placeholder="enter your password" required>
         </div>
-        <div>
-            <input type="text" class="input-box" name="spec" id="speca" placeholder="specalization" required>
-        </div>
-        <div>
-            <input type="file" class="input-box"  name="" id="" placeholder="enter your photo" required>
-        </div>
-
         <div class="prees">
             <button class="btn" onclick="chk()">SUBMIT</button>
         </div>
 
     </div>
+    </form>
 </div>
 </body>
 

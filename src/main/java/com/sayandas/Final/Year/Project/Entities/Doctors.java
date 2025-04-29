@@ -20,8 +20,9 @@ public class Doctors {
     @NotBlank(message = "password is mandatory")
     @Size(min = 8, message = "minimum 8 characters required")
     private String password;
-    @NotBlank
-    private String name;
+    @NotBlank(message = "username is mandatory")
+    @Column(name = "name")
+    private String username;
     @NotBlank(message = "email is mandatory")
     @Email(message = "not a valid email")
     private String email;
