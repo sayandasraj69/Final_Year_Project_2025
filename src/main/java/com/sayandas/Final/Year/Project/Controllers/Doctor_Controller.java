@@ -1,20 +1,19 @@
 package com.sayandas.Final.Year.Project.Controllers;
 
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
 import com.sayandas.Final.Year.Project.Services.Doctor_Service;
-import com.sayandas.Final.Year.Project.Entities.Doctors;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.expression.Strings;
 
-import java.util.Optional;
-
-@Controller
-//@RestController
-@RequestMapping("/doctor")
+import java.util.List;
+@CrossOrigin(origins = "http://127.0.0.1:5500") // Allow requests from your frontend
+@RestController
 public class Doctor_Controller {
     @Autowired
     Doctor_Service doctorService;
@@ -83,5 +82,37 @@ public class Doctor_Controller {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<Object>> getAllDoctors() {
+        try {
+            List<Object> doctors = doctorService.getAllDoctors();
+            if (!doctors.isEmpty()) {
+                return new ResponseEntity<>(doctors, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/minor/{specName}")
+    public ResponseEntity<List<Object>> getMinorDetails(@PathVariable String specName) {
+        try {
+            List<Object> doctors = doctorService.getMinorDetails(specName);
+            if (!doctors.isEmpty()) {
+                return new ResponseEntity<>(doctors, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+//    @GetMapping("/specialization_names")
+//    public ResponseEntity<List<String>> getAllSpecializationNames() {
+//         return new ResponseEntity<>(doctorService.getAllSpecializationNames(),HttpStatus.FOUND);
+//    }
 }
