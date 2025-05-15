@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Appointment Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <h1>Doctor Appointment Booking</h1>
+      <div class="auth-buttons">
+        <button onclick="location.href='signin.html'">Sign In</button>
+        <button onclick="location.href='signup.html'">Sign Up</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="search-section">
+      <h2>Find Your Doctor</h2>
+      <div class="dropdown-container">
+        <select id="specialization-dropdown">
+          <option value="">Select Specialization</option>
+        </select>
+        <input type="text" id="doctor-search" placeholder="Search by Doctor's Name">
+        <button id="search-button">Search</button>
+      </div>
+    </section>
+
+    <section class="doctors-list">
+      <h2>Available Doctors</h2>
+      <div id="doctors-container" class="scrollable-container">
+        <!-- Doctors' cards will be dynamically populated here -->
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
