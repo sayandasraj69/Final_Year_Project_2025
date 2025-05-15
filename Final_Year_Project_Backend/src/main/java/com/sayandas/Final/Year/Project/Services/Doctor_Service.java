@@ -31,7 +31,7 @@ public class Doctor_Service {
         return specRepository.findDocBySpecName(specName);
     }
 
-//    public List<String> getAllSpecializationNames() {
-//        return specializationRepository.findAllSpecializationNames();
-//    }
+    public List<String> getAllSpecializationNames() {
+        return specializationRepository.findAllSpecializationNames();
+    }
 }
