@@ -16,39 +16,39 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(error => console.error("Error fetching specializations:", error));
   
-  //   Listen for dropdown changes
-  // specializationDropdown.addEventListener("change", () => {
-  //   const selectedSpecialization = specializationDropdown.value;
+    // Listen for dropdown changes
+  specializationDropdown.addEventListener("change", () => {
+    const selectedSpecialization = specializationDropdown.value;
 
-  //   // Clear previous doctor cards
-  //   doctorsContainer.innerHTML = "";
+    // Clear previous doctor cards
+    doctorsContainer.innerHTML = "";
 
-  //   if (selectedSpecialization) {
-  //     // Fetch doctors based on the selected specialization
-  //     fetch(`http://localhost:8080/minor/${selectedSpecialization}`)
-  //       .then(response => {
-  //         if (!response.ok) {
-  //           throw new Error(`HTTP error! Status: ${response.status}`);
-  //         }
-  //         return response.json();
-  //       })
-  //       .then(data => {
-  //         if (!Array.isArray(data) || data.length === 0) {
-  //           doctorsContainer.innerHTML = "<p>No doctors found for this specialization.</p>";
-  //           return;
-  //         }
+    if (selectedSpecialization) {
+      // Fetch doctors based on the selected specialization
+      fetch(`http://localhost:8080/minor/${selectedSpecialization}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (!Array.isArray(data) || data.length === 0) {
+            doctorsContainer.innerHTML = "<p>No doctors found for this specialization.</p>";
+            return;
+          }
 
-  //         data.forEach(doctor => {
-  //           const doctorCard = document.createElement("div");
-  //           doctorCard.className = "doctor-card";
+          data.forEach(doctor => {
+            const doctorCard = document.createElement("div");
+            doctorCard.className = "doctor-card";
 
-  //           doctorCard.innerHTML = `
-  //             <h3>${doctor.name}</h3>
-  //             <p>${doctor.specialization}</p>
-  //           `;
+            doctorCard.innerHTML = `
+              <h3>${doctor.name}</h3>
+              <p>${doctor.specialization}</p>
+            `;
 
-  //           doctorsContainer.appendChild(doctorCard);
-  //       });
-  //     })
-  //     .catch(error => console.error("Error fetching doctors:", error));
-  // });
+            doctorsContainer.appendChild(doctorCard);
+        });
+      })
+      .catch(error => console.error("Error fetching doctors:", error));
+  });
