@@ -111,8 +111,8 @@ public class Doctor_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-//    @GetMapping("/specialization_names")
-//    public ResponseEntity<List<String>> getAllSpecializationNames() {
-//         return new ResponseEntity<>(doctorService.getAllSpecializationNames(),HttpStatus.FOUND);
-//    }
+    @GetMapping("/specialization_names")
+    public ResponseEntity<List<String>> getAllSpecializationNames() {
+         return new ResponseEntity<>(doctorService.getAllSpecializationNames(),HttpStatus.FOUND);
+    }
 }
