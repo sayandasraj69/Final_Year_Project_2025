@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Doctor Appointment Booking</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
     <div class="navbar">
@@ -24,21 +26,24 @@
         <select id="specialization-dropdown">
           <option value="Select Specialization"></option>
         </select>
+        <input type="text" name="" id="search-doctor" placeholder="Search by Doctor's Name" onclick="loadDoctor()" />
         <button id="search-button">Search</button>
       </div>
     </section>
-
+    <ul id="doctors"></ul>
     <section class="doctors-list">
       <h2>Available Doctors</h2>
       <div id="doctors-container" class="scrollable-container">
         <!-- Doctors' cards will be dynamically populated here -->
-         <div class="doc-img" id="selected-doctor">
-         
-         </div>
+        <div class="doc-img" id="selected-doctor">
+
+        </div>
       </div>
     </section>
   </main>
 
   <script src="script.js"></script>
+  <script src="search.js"></script>
 </body>
+
 </html>

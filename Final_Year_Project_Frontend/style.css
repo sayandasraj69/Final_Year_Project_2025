@@ -97,7 +97,7 @@ body {
   }
   
   .doctor-card p {
-    color: gray;
+    color: rgb(0, 0, 0);
     font-size: 14px;
   }
   /* Doctor cards container */
