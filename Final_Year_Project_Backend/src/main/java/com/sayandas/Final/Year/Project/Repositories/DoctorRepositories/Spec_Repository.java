@@ -8,7 +8,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface Spec_Repository extends JpaRepository<Specializations,Integer> {
-    @Query("SELECT s.specName, d.docName FROM Specializations s JOIN s.doctors d where s.specName = :specName")
+    @Query("SELECT d.docName, s.specName " +
+            "FROM Doctors d JOIN d.specializations s " +
+            "WHERE :specName IN (SELECT sp.specName FROM d.specializations sp)")
+//    @Query("SELECT s.specName, d.docName FROM Specializations s JOIN s.doctors d where s.specName = :specName")
     List<Object> findDocBySpecName(@Param("specName") String specName);
 //    @Query("SELECT s.specName FROM Specializations s where s.specName = :specName")
     Specializations findBySpecName(String specName);
