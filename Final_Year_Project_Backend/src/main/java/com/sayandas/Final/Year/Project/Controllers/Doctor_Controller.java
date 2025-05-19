@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.expression.Strings;
 
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin(origins = "http://127.0.0.1:5500") // Allow requests from your frontend
 @RestController
 public class Doctor_Controller {
@@ -98,9 +100,9 @@ public class Doctor_Controller {
         }
     }
     @GetMapping("/minor/{specName}")
-    public ResponseEntity<List<Object>> getMinorDetails(@PathVariable String specName) {
+    public ResponseEntity <List<Map<String, Object>>> getMinorDetails(@PathVariable String specName) {
         try {
-            List<Object> doctors = doctorService.getMinorDetails(specName);
+            List<Map<String, Object>> doctors = doctorService.getMinorDetailsBySpecName(specName);
             if (!doctors.isEmpty()) {
                 return new ResponseEntity<>(doctors, HttpStatus.OK);
             } else {
@@ -114,5 +116,11 @@ public class Doctor_Controller {
     @GetMapping("/specialization_names")
     public ResponseEntity<List<String>> getAllSpecializationNames() {
          return new ResponseEntity<>(doctorService.getAllSpecializationNames(),HttpStatus.FOUND);
+    }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<Map<String, Object>> getDoctorDetailsById(@PathVariable Integer id) {
+        Map<String, Object> doctorDetails = doctorService.getDoctorDetailsById(id);
+        return ResponseEntity.ok(doctorDetails);
     }
 }
