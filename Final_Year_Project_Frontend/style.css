@@ -44,7 +44,7 @@ body {
     cursor: pointer;
   }
   
-  #specialization-dropdown {
+  #specialization-dropdown ,#searchBar {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
