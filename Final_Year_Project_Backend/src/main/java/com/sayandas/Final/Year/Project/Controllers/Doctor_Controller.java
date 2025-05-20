@@ -1,6 +1,5 @@
 package com.sayandas.Final.Year.Project.Controllers;
 
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
 import com.sayandas.Final.Year.Project.Services.Doctor_Service;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
 import jakarta.validation.Valid;
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.expression.Strings;
 
 import java.util.List;
 import java.util.Map;
@@ -87,9 +85,9 @@ public class Doctor_Controller {
 
     }
     @GetMapping("/all")
-    public ResponseEntity<List<Object>> getAllDoctors() {
+    public ResponseEntity<List<Map<String, Object>>> getAllDoctors() {
         try {
-            List<Object> doctors = doctorService.getAllDoctors();
+            List<Map<String, Object>> doctors = doctorService.findMinorDetails();
             if (!doctors.isEmpty()) {
                 return new ResponseEntity<>(doctors, HttpStatus.OK);
             } else {

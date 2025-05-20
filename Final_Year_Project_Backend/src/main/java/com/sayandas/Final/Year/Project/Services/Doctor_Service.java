@@ -1,10 +1,6 @@
 package com.sayandas.Final.Year.Project.Services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
 import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.Doctor_Repository;
 import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.Spec_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +23,30 @@ public class Doctor_Service {
     public Doctors showDoctor(Integer id) {
         return doctorRepository.findById(id).get();
     }
-    public List<Object> getAllDoctors() {
-        return doctorRepository.getDetails();
+    public List<Map<String, Object>> findMinorDetails() {
+        List<Map<String, Object>> queryResult = doctorRepository.findMinorDetails();
+        Map<String, Set<String>> doctorSpecializationsMap = new LinkedHashMap<>();
+
+        // Group specializations by doctor name
+        queryResult.forEach(row -> {
+            String doctorName = (String) row.get("doctorName");
+            String specialization = (String) row.get("specialization");
+
+            doctorSpecializationsMap
+                    .computeIfAbsent(doctorName, k -> new LinkedHashSet<>())
+                    .add(specialization);
+        });
+
+        // Transform the grouped data into the desired JSON structure
+        List<Map<String, Object>> result = new ArrayList<>();
+        doctorSpecializationsMap.forEach((doctorName, specializations) -> {
+            Map<String, Object> doctorData = new HashMap<>();
+            doctorData.put("doctorName", doctorName);
+            doctorData.put("specializations", new ArrayList<>(specializations));
+            result.add(doctorData);
+        });
+
+        return result;
     }
     public List<Map<String, Object>> getMinorDetailsBySpecName(String specName) {
         List<Map<String, Object>> queryResult = doctorRepository.findBySpecName(specName);

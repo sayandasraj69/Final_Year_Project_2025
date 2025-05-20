@@ -17,9 +17,14 @@ public interface Doctor_Repository extends JpaRepository<Doctors,Integer> {
 //            "and s.spec_Name = :specName", nativeQuery = true)
 //    List<Object> findBySpecName(String specName);
 
-    @Query("SELECT d.docId, d.docName, d.docEmail, d.docPhn, s.specName " +
-            "FROM Doctors d JOIN d.specializations s")
-    List<Object> getDetails();
+    @Query("SELECT d.docName AS doctorName, sAll.specName AS specialization " +
+            "FROM Doctors d " +
+            "JOIN d.specializations sAll " +
+            "WHERE EXISTS (" +
+            "  SELECT 1 " +
+            "  FROM d.specializations sFilter " +
+            ")")
+    List<Map<String, Object>> findMinorDetails();
 
     @Query("SELECT d.docName AS doctorName, s.specName AS specialization, sch.weekDay AS scheduleDay, t.timeRange AS timeRange, t.noOfPatients AS noOfPatients " +
             "FROM Doctors d " +
