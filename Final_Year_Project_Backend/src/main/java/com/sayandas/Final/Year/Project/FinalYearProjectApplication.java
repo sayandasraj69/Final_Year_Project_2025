@@ -1,11 +1,10 @@
 package com.sayandas.Final.Year.Project;
 
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Schedule;
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Timings;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.*;
+import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.AppointmentsRepository;
 import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.Doctor_Repository;
 import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.Spec_Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -185,23 +184,19 @@ public class FinalYearProjectApplication {
 	}
 
 //	@Bean
-	public CommandLineRunner commandLineRunner1(Doctor_Repository doctorRepository) {
-		List<Specializations> specializations = new ArrayList<>();
-		Specializations specializations1 = new Specializations();
-		specializations1.setSpecName("MBBS");
-		Specializations specialization2 = new Specializations();
-		specialization2.setSpecName("Cardiology");
-		specializations.add(specializations1);
-		specializations.add(specialization2);
+	public CommandLineRunner commandLineRunner1(AppointmentsRepository appointmentsRepository) {
 
 		return args -> {
-			Doctors doctor = Doctors.builder()
-					.docName("Soumashree Haldar")
-					.docEmail("soumo@gmail.com")
-					.docPhn("1234567890")
-					.specializations(specializations)
+			Appointments appointment = Appointments.builder()
+					.appDate("21-05-2015")
+					.appWeekDay("Wednesday")
+					.appTimeRange("10:30 - 12:30")
+					.appPatName("Sayan Das")
 					.build();
-			doctorRepository.save(doctor);
+
+			List<Appointments> appointmentsList = new ArrayList<>();
+			appointmentsList.add(appointment);
+			appointmentsRepository.saveAll(appointmentsList);
 		};
 	}
 

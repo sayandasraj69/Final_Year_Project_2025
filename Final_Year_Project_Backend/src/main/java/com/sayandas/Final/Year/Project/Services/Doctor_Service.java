@@ -25,24 +25,31 @@ public class Doctor_Service {
     }
     public List<Map<String, Object>> findMinorDetails() {
         List<Map<String, Object>> queryResult = doctorRepository.findMinorDetails();
-        Map<String, Set<String>> doctorSpecializationsMap = new LinkedHashMap<>();
 
-        // Group specializations by doctor name
+        Map<Integer, Map<String, Object>> doctorDetailsMap = new LinkedHashMap<>();
+
+        // Group specializations by doctor ID
         queryResult.forEach(row -> {
+            Integer docId = (Integer) row.get("docId");
             String doctorName = (String) row.get("doctorName");
             String specialization = (String) row.get("specialization");
 
-            doctorSpecializationsMap
-                    .computeIfAbsent(doctorName, k -> new LinkedHashSet<>())
-                    .add(specialization);
+            doctorDetailsMap.computeIfAbsent(docId, k -> {
+                Map<String, Object> doctorData = new HashMap<>();
+                doctorData.put("docId", docId);
+                doctorData.put("doctorName", doctorName);
+                doctorData.put("specializations", new LinkedHashSet<String>());
+                return doctorData;
+            });
+
+            Set<String> specializations = (Set<String>) doctorDetailsMap.get(docId).get("specializations");
+            specializations.add(specialization);
         });
 
         // Transform the grouped data into the desired JSON structure
         List<Map<String, Object>> result = new ArrayList<>();
-        doctorSpecializationsMap.forEach((doctorName, specializations) -> {
-            Map<String, Object> doctorData = new HashMap<>();
-            doctorData.put("doctorName", doctorName);
-            doctorData.put("specializations", new ArrayList<>(specializations));
+        doctorDetailsMap.forEach((docId, doctorData) -> {
+            doctorData.put("specializations", new ArrayList<>((Set<String>) doctorData.get("specializations")));
             result.add(doctorData);
         });
 
@@ -51,30 +58,36 @@ public class Doctor_Service {
     public List<Map<String, Object>> getMinorDetailsBySpecName(String specName) {
         List<Map<String, Object>> queryResult = doctorRepository.findBySpecName(specName);
 
-        Map<String, Set<String>> doctorSpecializationsMap = new LinkedHashMap<>();
+        Map<String, Map<String, Object>> doctorDetailsMap = new LinkedHashMap<>();
 
         // Group specializations by doctor name
         queryResult.forEach(row -> {
+            Integer docId = (Integer) row.get("docId");
             String doctorName = (String) row.get("doctorName");
             String specialization = (String) row.get("specialization");
 
-            doctorSpecializationsMap
-                    .computeIfAbsent(doctorName, k -> new LinkedHashSet<>())
-                    .add(specialization);
+            doctorDetailsMap.computeIfAbsent(doctorName, k -> {
+                Map<String, Object> doctorData = new HashMap<>();
+                doctorData.put("docId", docId);
+                doctorData.put("doctorName", doctorName);
+                doctorData.put("specializations", new LinkedHashSet<String>());
+                return doctorData;
+            });
+
+            Set<String> specializations = (Set<String>) doctorDetailsMap.get(doctorName).get("specializations");
+            specializations.add(specialization);
         });
 
         // Transform the grouped data into the desired JSON structure
         List<Map<String, Object>> result = new ArrayList<>();
-        doctorSpecializationsMap.forEach((doctorName, specializations) -> {
-            List<String> orderedSpecializations = new ArrayList<>(specializations);
+        doctorDetailsMap.forEach((doctorName, doctorData) -> {
+            List<String> orderedSpecializations = new ArrayList<>((Set<String>) doctorData.get("specializations"));
 
             // Ensure the query parameter specialization is first
             if (orderedSpecializations.remove(specName)) {
                 orderedSpecializations.add(0, specName);
             }
 
-            Map<String, Object> doctorData = new HashMap<>();
-            doctorData.put("doctorName", doctorName);
             doctorData.put("specializations", orderedSpecializations);
             result.add(doctorData);
         });
