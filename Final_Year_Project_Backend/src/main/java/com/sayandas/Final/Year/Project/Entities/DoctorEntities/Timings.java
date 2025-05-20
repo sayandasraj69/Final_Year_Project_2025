@@ -5,20 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Schedule {
+public class Timings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int schId;
-    private String weekDay;
+    private int timingId;
+    private String timeRange;
+    private int noOfPatients;
     @ManyToOne
-    @JoinColumn(name = "docId")
-    private Doctors doctor;
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Timings> timings;
+    @JoinColumn(name = "schId")
+    private Schedule schedule;
 }

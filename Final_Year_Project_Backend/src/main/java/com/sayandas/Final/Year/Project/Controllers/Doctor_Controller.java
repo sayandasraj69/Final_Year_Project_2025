@@ -1,6 +1,5 @@
 package com.sayandas.Final.Year.Project.Controllers;
 
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
 import com.sayandas.Final.Year.Project.Services.Doctor_Service;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
 import jakarta.validation.Valid;
@@ -9,9 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.expression.Strings;
 
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin(origins = "http://127.0.0.1:5500") // Allow requests from your frontend
 @RestController
 public class Doctor_Controller {
@@ -85,9 +85,9 @@ public class Doctor_Controller {
 
     }
     @GetMapping("/all")
-    public ResponseEntity<List<Object>> getAllDoctors() {
+    public ResponseEntity<List<Map<String, Object>>> getAllDoctors() {
         try {
-            List<Object> doctors = doctorService.getAllDoctors();
+            List<Map<String, Object>> doctors = doctorService.findMinorDetails();
             if (!doctors.isEmpty()) {
                 return new ResponseEntity<>(doctors, HttpStatus.OK);
             } else {
@@ -98,9 +98,9 @@ public class Doctor_Controller {
         }
     }
     @GetMapping("/minor/{specName}")
-    public ResponseEntity<List<Object>> getMinorDetails(@PathVariable String specName) {
+    public ResponseEntity <List<Map<String, Object>>> getMinorDetails(@PathVariable String specName) {
         try {
-            List<Object> doctors = doctorService.getMinorDetails(specName);
+            List<Map<String, Object>> doctors = doctorService.getMinorDetailsBySpecName(specName);
             if (!doctors.isEmpty()) {
                 return new ResponseEntity<>(doctors, HttpStatus.OK);
             } else {
@@ -114,5 +114,11 @@ public class Doctor_Controller {
     @GetMapping("/specialization_names")
     public ResponseEntity<List<String>> getAllSpecializationNames() {
          return new ResponseEntity<>(doctorService.getAllSpecializationNames(),HttpStatus.FOUND);
+    }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<Map<String, Object>> getDoctorDetailsById(@PathVariable Integer id) {
+        Map<String, Object> doctorDetails = doctorService.getDoctorDetailsById(id);
+        return ResponseEntity.ok(doctorDetails);
     }
 }
