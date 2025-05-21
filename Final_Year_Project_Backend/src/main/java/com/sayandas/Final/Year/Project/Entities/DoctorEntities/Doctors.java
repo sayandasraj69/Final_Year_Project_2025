@@ -37,6 +37,8 @@ public class Doctors {
     private List<Specializations> specializations;
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Schedule> schedule;
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Appointments> appointments;
 
 
 

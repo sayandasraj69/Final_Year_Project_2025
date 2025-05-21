@@ -17,7 +17,7 @@ public interface Doctor_Repository extends JpaRepository<Doctors,Integer> {
 //            "and s.spec_Name = :specName", nativeQuery = true)
 //    List<Object> findBySpecName(String specName);
 
-    @Query("SELECT d.docName AS doctorName, sAll.specName AS specialization " +
+    @Query("SELECT d.docId as docId, d.docName AS doctorName, sAll.specName AS specialization " +
             "FROM Doctors d " +
             "JOIN d.specializations sAll " +
             "WHERE EXISTS (" +
@@ -34,7 +34,7 @@ public interface Doctor_Repository extends JpaRepository<Doctors,Integer> {
             "WHERE d.docId = :doctorId")
     List<Map<String, Object>> findDoctorDetailsById(@Param("doctorId") Integer doctorId);
 
-    @Query("SELECT d.docName AS doctorName, sAll.specName AS specialization " +
+    @Query("SELECT d.docId AS docId, d.docName AS doctorName, sAll.specName AS specialization " +
             "FROM Doctors d " +
             "JOIN d.specializations sAll " +
             "WHERE EXISTS (" +
