@@ -12,7 +12,7 @@
 //     doctorList.innerHTML = ""; // Clear previous results
 //     if (doctors.length === 0) {
 //       doctorList.innerHTML = "<p>No doctors found.</p>";
-//       return;
+//       return; 
 //     }
 //     doctors.forEach(doctor => {
 //       // Adjust property access based on your API response structure

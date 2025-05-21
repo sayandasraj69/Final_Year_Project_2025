@@ -101,7 +101,7 @@ body {
     font-size: 14px;
   }
   /* Doctor cards container */
-#doctors-container {
+#doctors {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
@@ -109,11 +109,13 @@ body {
 }
 
 /* Individual doctor card */
-.doctor-card {
+.doctor {
   background: #2584e3;
   color: #ffffff;
   text-align: center;
   font-size: 16px;
+  margin: 4px 4px 0;
+
   font-weight: bold;
   border: 1px solid #000000;
   border-radius: 8px;
@@ -124,7 +126,7 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-.doctor-card:hover {
+.doctor:hover {
   box-shadow: 0 4px 16px rgba(0,0,0,0.12);
   transform: translateY(-4px) scale(1.03);
   background: #84c4e1;
