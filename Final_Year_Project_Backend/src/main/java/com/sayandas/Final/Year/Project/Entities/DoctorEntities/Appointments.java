@@ -19,6 +19,7 @@ public class Appointments {
     private String appWeekDay;
     private String appTimeRange;
     private String appPatName;
+
     @ManyToOne
     @JoinColumn(name = "docId")
     private Doctors doctor;

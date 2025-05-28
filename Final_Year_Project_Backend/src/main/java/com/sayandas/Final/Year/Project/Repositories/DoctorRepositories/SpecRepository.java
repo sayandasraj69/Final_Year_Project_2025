@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface Spec_Repository extends JpaRepository<Specializations,Integer> {
+public interface SpecRepository extends JpaRepository<Specializations,Integer> {
     @Query("SELECT d.docName, s.specName " +
             "FROM Doctors d JOIN d.specializations s " +
             "WHERE :specName IN (SELECT sp.specName FROM d.specializations sp)")
