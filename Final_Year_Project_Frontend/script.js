@@ -1,67 +1,45 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const specializationDropdown = document.getElementById("specialization-dropdown");
-  const doctorsContainer = document.getElementById("doctors-container");
-  const selectedDoctorDiv = document.getElementById("selected-doctor");
+  const allDoctors = [];
 
-  // Fetch specializations from the backend
-  fetch("http://localhost:8080/specialization_names")
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(specialization => {
-        const option = document.createElement("option");
-        option.value = specialization;
-        option.textContent = specialization;
-        specializationDropdown.appendChild(option);
-      });
-    })
-    .catch(error => console.error("Error fetching specializations:", error));
+const doctorList = document.getElementById("doctors-list");
 
-  // Listen for dropdown changes
-  specializationDropdown.addEventListener("change", () => {
-    const selectedSpecialization = specializationDropdown.value;
+fetch("http://localhost:8080/all")
+  .then(response => response.json())
+  .then(data => {
+    allDoctors.push(...data);
+    displayDoctors(allDoctors);
+    console.log(allDoctors);
+  })
+  .catch(error => console.error("Error fetching doctors:", error));
 
-    // Clear previous doctor cards
-    doctorsContainer.innerHTML = "";
-    selectedDoctorDiv.innerHTML = ""; // Clear selected doctor info
+// Function to display doctors
+function displayDoctors(doctors) {
+  doctorList.innerHTML = ""; // Clear previous results
+  if (doctors.length === 0) {
+    doctorList.innerHTML = "<p>No doctors found.</p>";
+    return;
+  }
 
-    if (selectedSpecialization) {
-      // Fetch doctors based on the selected specialization
-      fetch(`http://localhost:8080/minor/${selectedSpecialization}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log("Doctors data:", data); // Log the fetched data
-          // Check if the data is an array and has elements
-          if (!Array.isArray(data) || data.length === 0) {
-            doctorsContainer.innerHTML = "<p>No doctors found for this specialization.</p>";
-            return;
-          }
+  doctors.forEach(doctor => {
+    const doctorName = doctor.doctorName || "Unknown Name";
+    const specializations = doctor.specializations || []; // Assuming specializations is a property
 
-          data.forEach(doctor => {
-            const doctorCard = document.createElement("div");
-            doctorCard.className = "doctor-card";
+    const doctorDiv = document.createElement("div");
+    doctorDiv.className = "doctor";
+    
+    const specializationText = specializations.length > 0 
+      ? specializations.join(", ") 
+      : "No specialization listed";
 
-            doctorCard.innerHTML = `
-              <h3>${doctor[1] || "unnamed doctor"}</h3>
-              <p>Specialization: ${doctor[0] || "unknown specialization"}</p>
-              <button class="select-doctor">Select</button>
-            `;
-            console.log("doctor name:", doctor.docName);
+    doctorDiv.innerHTML = `
+      <h3>${doctorName}</h3>
+      <p>Specializations: ${specializationText}</p>
+    `;
 
-            doctorsContainer.appendChild(doctorCard);
-          });
-        })
-        .catch(error => {
-          doctorsContainer.innerHTML = "<p>Error fetching doctors</p>";
-          console.error("Error fetching doctors:", error);
-        });
-    } else {
-      doctorsContainer.innerHTML = "<p>Please select a specialization.</p>";
-    }
+doctorDiv.addEventListener("click", () => {
+      // Redirect to the doctor details page with the doctor's ID
+      window.location.href = `docDetail.html?docId=${doctor.docId}`;
+    });
 
+    doctorList.appendChild(doctorDiv);
   });
-})
+}
