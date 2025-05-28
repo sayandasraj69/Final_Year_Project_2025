@@ -1,7 +1,4 @@
-
-
-  
-const allDoctors = [];
+  const allDoctors = [];
 
 const doctorList = document.getElementById("doctors-list");
 
@@ -37,6 +34,11 @@ function displayDoctors(doctors) {
       <h3>${doctorName}</h3>
       <p>Specializations: ${specializationText}</p>
     `;
+
+doctorDiv.addEventListener("click", () => {
+      // Redirect to the doctor details page with the doctor's ID
+      window.location.href = `docDetail.html?docId=${doctor.docId}`;
+    });
 
     doctorList.appendChild(doctorDiv);
   });

@@ -20,7 +20,7 @@ public class FinalYearProjectApplication {
 		SpringApplication.run(FinalYearProjectApplication.class, args);
 	}
 
-//	@Bean
+	@Bean
 	public CommandLineRunner commandLineRunner(Doctor_Repository doctorRepository, Spec_Repository specRepository){
 		return args -> {
 			Specializations specs = Specializations.builder()
