@@ -9,19 +9,20 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Specializations {
-
+@Table
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer specId;
-    @Column(unique = true)
-    private String specName;
+    private Integer cityId;
+    private String cityName;
 
-    @ManyToMany(mappedBy = "specializations")
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Centers> centers;
+
+    @ManyToMany(mappedBy = "cities")
     private List<Doctors> doctors;
 }

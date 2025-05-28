@@ -2,7 +2,7 @@
 //
 //import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
 //import com.sayandas.Final.Year.Project.Entities.UserPrincipal;
-//import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.Doctor_Repository;
+//import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.DoctorRepository;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +14,7 @@
 //@Service
 //class MyUserDetailsService implements UserDetailsService {
 //    @Autowired
-//    private Doctor_Repository doctorRepository;
+//    private DoctorRepository doctorRepository;
 //    @Override
 //    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        Doctors doctor = doctorRepository.findByUsername(username);

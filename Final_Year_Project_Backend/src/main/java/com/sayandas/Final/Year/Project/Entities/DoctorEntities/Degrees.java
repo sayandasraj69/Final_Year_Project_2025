@@ -14,14 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Specializations {
-
+public class Degrees {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer specId;
-    @Column(unique = true)
-    private String specName;
+    private Integer degId;
+    private String degName;
 
-    @ManyToMany(mappedBy = "specializations")
+    @ManyToMany(mappedBy = "degrees")
     private List<Doctors> doctors;
 }

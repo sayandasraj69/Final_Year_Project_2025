@@ -1,23 +1,34 @@
 package com.sayandas.Final.Year.Project.Services;
 
+import com.sayandas.Final.Year.Project.DTOs.DoctorDetailsDTO;
+import com.sayandas.Final.Year.Project.DTOs.ScheduleDTO;
+import com.sayandas.Final.Year.Project.DTOs.TimingDTO;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Degrees;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
-import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.Doctor_Repository;
-import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.Spec_Repository;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
+import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.DoctorRepository;
+import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.SpecRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class Doctor_Service {
     @Autowired
-    Doctor_Repository doctorRepository;
+    DoctorRepository doctorRepository;
     @Autowired
-    Spec_Repository specRepository;
+    SpecRepository specRepository;
 //    @Autowired
-//    Spec_Repository specializationRepository;
+//    SpecRepository specializationRepository;
 //    ObjectMapper objectMapper = new ObjectMapper();
-    public Doctors addDoctor(Doctors doctor) {
+    public Doctors addDoctor(Doctors doctor, MultipartFile file) throws IOException {
+        doctor.setDocImageName(file.getOriginalFilename());
+        doctor.setDocImageType(file.getContentType());
+        doctor.setDocImageData(file.getBytes());
         return doctorRepository.save(doctor);
     }
     public Doctors showDoctor(Integer id) {
@@ -99,7 +110,7 @@ public class Doctor_Service {
         return specRepository.findAllSpecializationNames();
     }
 
-    public Map<String, Object> getDoctorDetailsById(Integer doctorId) {
+    public Map<String, Object> getDoctorDetailsById1(Integer doctorId) {
         List<Map<String, Object>> queryResult = doctorRepository.findDoctorDetailsById(doctorId);
 
         Map<String, Object> result = new HashMap<>();
@@ -138,5 +149,42 @@ public class Doctor_Service {
 
         result.put("schedule", new ArrayList<>(scheduleMap.values()));
         return result;
+    }
+
+    public List<Map<String, Object>> findDoctorDetailsById(Integer id) {
+        return doctorRepository.findDoctorDetailsById(id);
+    }
+
+    // In your service class
+    public DoctorDetailsDTO getDoctorDetailsById(Integer doctorId) {
+        Doctors doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+        List<String> degrees = doctor.getDegrees().stream()
+                .map(Degrees::getDegName)
+                .collect(Collectors.toList());
+
+        List<String> specializations = doctor.getSpecializations().stream()
+                .map(Specializations::getSpecName)
+                .collect(Collectors.toList());
+
+        List<ScheduleDTO> schedules = doctor.getSchedule().stream()
+                .map(sch -> new ScheduleDTO(
+                        sch.getWeekDay(),
+                        sch.getTimings().stream()
+                                .map(t -> new TimingDTO(
+                                        t.getTimeRange(),
+                                        t.getNoOfPatients(),
+                                        t.getCity().getCityName(),
+                                        t.getCenter().getCenName()
+                                )).collect(Collectors.toList())
+                )).collect(Collectors.toList());
+
+        return new DoctorDetailsDTO(
+                doctor.getDocName(),
+                degrees,
+                specializations,
+                schedules
+        );
     }
 }
