@@ -13,16 +13,18 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://127.0.0.1:5500") // Allow requests from your frontend
-@RestController("/doctor")
+@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5500"}) // Allow requests from your frontend
+@RestController
+@RequestMapping("/doctor")
 public class Doctor_Controller {
     @Autowired
     Doctor_Service doctorService;
     @PostMapping("/register")
-    private ResponseEntity<?> addDoctor(@Valid @RequestParam Doctors doctor, @RequestParam MultipartFile file) {
+    private ResponseEntity<?> addDoctor(@Valid @RequestBody Doctors doctor) {
         try {
-            Doctors savedDoctor = doctorService.addDoctor(doctor, file);
-            return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
+            Doctors savedDoctor = doctorService.addDoctor(doctor);
+//            return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }

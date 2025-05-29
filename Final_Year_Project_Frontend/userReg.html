@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
             align-items: center;
             height: 100vh;
         }
+
         .registration-container {
             background: #fff;
             padding: 20px 30px;
@@ -23,18 +25,22 @@
             width: 100%;
             max-width: 400px;
         }
+
         .registration-container h2 {
             margin-bottom: 20px;
             color: #333;
         }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         .form-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
+
         .form-group input {
             width: 100%;
             padding: 10px;
@@ -42,16 +48,19 @@
             border-radius: 4px;
             font-size: 14px;
         }
+
         .form-group input:focus {
             border-color: #1fab21;
             outline: none;
         }
+
         .form-group .error-message {
             color: red;
             font-size: 12px;
             margin-top: 5px;
             display: none;
         }
+
         .form-group button {
             width: 100%;
             padding: 10px;
@@ -63,11 +72,13 @@
             font-size: 16px;
             cursor: pointer;
         }
+
         .form-group button:hover {
             background-color: #17a5f2;
         }
     </style>
 </head>
+
 <body>
     <div class="registration-container">
         <h2>User Registration</h2>
@@ -94,8 +105,10 @@
     </div>
 
     <script>
-        document.getElementById("registrationForm").addEventListener("submit", function (e) {
-            e.preventDefault(); // Prevent form submission
+        // Handle form submission
+        const form2E1 = document.querySelector("#registrationForm");
+        form2E1.addEventListener("submit", event => {
+            event.preventDefault(); // Prevent form submission
 
             let isValid = true;
 
@@ -131,13 +144,35 @@
 
             // If all fields are valid, submit the form
             if (isValid) {
-                alert("Form submitted successfully!");
+                const formData = new FormData(form2E1);
+                const data = Object.fromEntries(formData);
+
+                fetch("http://localhost:8080/doctor/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        if (response.headers.get("content-type")?.includes("application/json")) {
+                            return response.json();
+                        } else {
+                            return response.text();
+                        }
+                    })
+                    .then(data => {
+                        console.log("Success:", data);
+                        alert("Registration successful!");
+                        form2E1.reset();
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("Registration failed. Please try again.");
+                    });
+                // alert("Form submitted successfully!");
                 // You can add form submission logic here
             }
         });
     </script>
 </body>
+
 </html>
-
-
-
