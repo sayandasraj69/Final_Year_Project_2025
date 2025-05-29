@@ -17,7 +17,7 @@ public class FinalYearProjectApplication {
         SpringApplication.run(FinalYearProjectApplication.class, args);
     }
 
-    @Bean
+//    @Bean
     public CommandLineRunner commandLineRunner(DoctorRepository doctorRepository, SpecRepository specRepository,
                                                CityRepository cityRepository, CenterRepository centerRepository, DegRepository degRepository) {
         return args -> {

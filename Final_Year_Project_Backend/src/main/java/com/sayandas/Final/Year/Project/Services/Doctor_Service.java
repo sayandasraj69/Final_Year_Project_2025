@@ -25,10 +25,10 @@ public class Doctor_Service {
 //    @Autowired
 //    SpecRepository specializationRepository;
 //    ObjectMapper objectMapper = new ObjectMapper();
-    public Doctors addDoctor(Doctors doctor, MultipartFile file) throws IOException {
-        doctor.setDocImageName(file.getOriginalFilename());
-        doctor.setDocImageType(file.getContentType());
-        doctor.setDocImageData(file.getBytes());
+    public Doctors addDoctor(Doctors doctor) throws IOException {
+//        doctor.setDocImageName(file.getOriginalFilename());
+//        doctor.setDocImageType(file.getContentType());
+//        doctor.setDocImageData(file.getBytes());
         return doctorRepository.save(doctor);
     }
     public Doctors showDoctor(Integer id) {
