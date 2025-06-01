@@ -3,31 +3,8 @@ let allDoctors = null;
 // Get doctorId from URL
 const doctorId = new URLSearchParams(window.location.search).get("docId");
 
-<<<<<<< HEAD
-    if (!doctor) {
-        detail.innerHTML = "<p>Doctor not found.</p>";
-        return;
-    }
-    //   doctor details
-    detail.innerHTML = `
-    <div class="doctor-info">
-        <h2>${doctor.doctorName}</h2>
-        <p>Specializations: ${doctor.specializations.join(", ")}</p>
-    </div>
-`;
-}
-// showing doctor schedule
-let doctorId = new URLSearchParams(window.location.search).get("docId");
-//   show doctor schedule
-function showDoctorSchedule() {
-    let scheduleContainer = document.querySelector(".doctor-schedule");
-    scheduleContainer.innerHTML = ""; // Clear previous schedule
-
-    // Fetch the doctor's schedule
-=======
 // Main function to fetch and display all doctor details
 function showDoctorDetails() {
->>>>>>> 955846c05ffbfabe13a32ac8b006f2aee3e71d24
     fetch(`http://localhost:8080/doctor/${doctorId}/details`)
         .then(response => response.json())
         .then(doctor => {
