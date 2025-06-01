@@ -34,7 +34,7 @@ function showDoctorSchedule() {
     scheduleContainer.innerHTML = ""; // Clear previous schedule
 
     // Fetch the doctor's schedule
-    fetch(`http://localhost:8080/${doctorId}/details`)
+    fetch(`http://localhost:8080/doctor/${doctorId}/details`)
         .then(response => response.json())
         .then(data => {
             console.log(data);

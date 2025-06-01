@@ -1,8 +1,8 @@
   // Populate specialization dropdown on page load
-        fetch("http://localhost:8080/specialization_names")
+        fetch("http://localhost:8080/doctor/specialization_names")
             .then(response => response.json())
             .then(data => {
-                const specializationDropdown = document.getElementById("specialization");
+                const specializationDropdown = document.getElementById("specializations");
                 data.forEach(specialization => {
                     const option = document.createElement("option");
                     option.value = specialization;
@@ -22,9 +22,9 @@
             let isValid = true;
 
             // Validate Doctorname
-            const doctorname = document.getElementById("doctorname");
+            const docName = document.getElementById("docName");
             const doctornameError = document.getElementById("doctornameError");
-            if (doctorname.value.trim() === "") {
+            if (docName.value.trim() === "") {
                 doctornameError.style.display = "block";
                 isValid = false;
             } else {
@@ -32,9 +32,9 @@
             }
 
             // Validate email
-            const email = document.getElementById("email");
+            const docEmail = document.getElementById("docEmail");
             const emailError = document.getElementById("emailError");
-            if (email.value.trim() === "") {
+            if (docEmail.value.trim() === "") {
                 emailError.style.display = "block";
                 isValid = false;
             } else {
@@ -42,19 +42,22 @@
             }
 
             // Validate qualification
-            const qualification = document.getElementById("qualification");
-            const qualificationError = document.getElementById("qualificationError");
-            if (qualification.value.trim() === "") {
-                qualificationError.style.display = "block";
-                isValid = false;
-            } else {
-                qualificationError.style.display = "none";
-            }
+            // const degrees = document.getElementById("deegrees");
+            // const qualificationError = document.getElementById("qualificationError");
+            // if (degrees.value.trim() === "") {
+            //     qualificationError.style.display = "block";
+            //     isValid = false;
+            // } else {
+            //     qualificationError.style.display = "none";
+            // }
 
             // Validate specialization
-            const specialization = document.getElementById("specialization");
+            const specialization = document.getElementById("specializations");
+            const specializations = {
+                "specialization1":specialization
+            }
             const specializationError = document.getElementById("specializationError");
-            if (specialization.value.trim() === "") {
+            if (specializations[`specialization1`].value.trim() === "") {
                 specializationError.style.display = "block";
                 isValid = false;
             } else {
@@ -62,20 +65,20 @@
             }
 
             // Uncomment and validate password if needed
-            const password = document.getElementById("password");
-            const passwordError = document.getElementById("passwordError");
-            if (password.value.trim() === "") {
-                passwordError.style.display = "block";
-                isValid = false;
-            } else {
-                passwordError.style.display = "none";
-            }
+            // const password = document.getElementById("password");
+            // const passwordError = document.getElementById("passwordError");
+            // if (password.value.trim() === "") {
+            //     passwordError.style.display = "block";
+            //     isValid = false;
+            // } else {
+            //     passwordError.style.display = "none";
+            // }
 
             // If all fields are valid, submit the form
             if (isValid) {
                 const formData = new FormData(form1E1);
                 const data = Object.fromEntries(formData);
-
+                console.log(data);
                 fetch("http://localhost:8080/doctor/register", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
