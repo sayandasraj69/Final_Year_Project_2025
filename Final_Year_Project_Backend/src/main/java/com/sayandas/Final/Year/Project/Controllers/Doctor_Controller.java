@@ -2,6 +2,7 @@ package com.sayandas.Final.Year.Project.Controllers;
 
 import com.sayandas.Final.Year.Project.DTOs.DoctorDetailsDTO;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
 import com.sayandas.Final.Year.Project.Services.Doctor_Service;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ public class Doctor_Controller {
     @Autowired
     Doctor_Service doctorService;
     @PostMapping("/register")
-    private ResponseEntity<?> addDoctor(@Valid @RequestBody Doctors doctor) {
+    private ResponseEntity<?> addDoctor(@RequestBody Doctors doctor) {
         try {
             Doctors savedDoctor = doctorService.addDoctor(doctor);
-//            return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
+//            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -71,8 +72,8 @@ public class Doctor_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/specialization_names")
-    public ResponseEntity<List<String>> getAllSpecializationNames() {
+    @GetMapping("/specializations")
+    public ResponseEntity<List<Object>> getAllSpecializationNames() {
          return new ResponseEntity<>(doctorService.getAllSpecializationNames(),HttpStatus.FOUND);
     }
 

@@ -106,8 +106,8 @@ public class Doctor_Service {
         return result;
     }
 
-    public List<String> getAllSpecializationNames() {
-        return specRepository.findAllSpecializationNames();
+    public List<Object> getAllSpecializationNames() {
+        return specRepository.findAllSpecializations();
     }
 
     public Map<String, Object> getDoctorDetailsById1(Integer doctorId) {

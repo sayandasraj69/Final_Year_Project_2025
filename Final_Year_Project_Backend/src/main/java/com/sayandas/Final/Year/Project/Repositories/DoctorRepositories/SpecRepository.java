@@ -15,6 +15,6 @@ public interface SpecRepository extends JpaRepository<Specializations,Integer> {
     List<Object> findDocBySpecName(@Param("specName") String specName);
 //    @Query("SELECT s.specName FROM Specializations s where s.specName = :specName")
     Specializations findBySpecName(String specName);
-    @Query("SELECT s.specName from Specializations s")
-    List<String> findAllSpecializationNames();
+    @Query("SELECT s.specId, s.specName from Specializations s")
+    List<Object> findAllSpecializations();
 }
