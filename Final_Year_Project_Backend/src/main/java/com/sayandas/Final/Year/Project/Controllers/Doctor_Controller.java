@@ -21,11 +21,11 @@ public class Doctor_Controller {
     @Autowired
     Doctor_Service doctorService;
     @PostMapping("/register")
-    private ResponseEntity<?> addDoctor(@RequestBody Doctors doctor) {
+    private ResponseEntity<?> addDoctor(@RequestPart Doctors doctor, @RequestPart MultipartFile image) {
         try {
-            Doctors savedDoctor = doctorService.addDoctor(doctor);
-            return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
-//            return new ResponseEntity<>(HttpStatus.CREATED);
+            Doctors savedDoctor = doctorService.addDoctor(doctor, image);
+//            return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -78,17 +78,32 @@
             //     passwordError.style.display = "none";
             // }
 
-            // If all fields are valid, submit the form
+
             if (isValid) {
-                const formData = new FormData(form1E1);
-                const data = Object.fromEntries(formData);
-                data.specializations = selectedSpecializations; // Use the correct property name
-                console.log(data);
-                
+                const formData = new FormData();
+
+                // Collect data from form using correct IDs
+                const doctor = {
+                    docName: document.getElementById("doctorName").value,
+                    docEmail: document.getElementById("email").value,
+                    // Add password if you want:
+                    // password: document.getElementById("password").value,
+                    specializations: selectedSpecializations // already an array of objects
+                };
+
+                // Append doctor JSON as a Blob
+                formData.append("doctor", new Blob([JSON.stringify(doctor)], { type: "application/json" }));
+
+                // Append the file
+                const imageFile = document.querySelector('input[name="docImage"]').files[0];
+                if (imageFile) {
+                    formData.append("image", imageFile);
+                }
+
+                // Send via multipart/form-data
                 fetch("http://localhost:8080/doctor/register", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
+                    body: formData // No need to set Content-Type manually
                 })
                 .then(response => {
                     if (response.headers.get("content-type")?.includes("application/json")) {
@@ -107,4 +122,37 @@
                     alert("Registration failed. Please try again.");
                 });
             }
+
+
+
+
+            // If all fields are valid, submit the form
+            // if (isValid) {
+            //     const formData = new FormData(form1E1);
+            //     const data = Object.fromEntries(formData);
+            //     data.specializations = selectedSpecializations; // Use the correct property name
+            //     console.log(data);
+                
+            //     fetch("http://localhost:8080/doctor/register", {
+            //         method: "POST",
+            //         headers: { "Content-Type": "application/json" },
+            //         body: JSON.stringify(data)
+            //     })
+            //     .then(response => {
+            //         if (response.headers.get("content-type")?.includes("application/json")) {
+            //             return response.json();
+            //         } else {
+            //             return response.text();
+            //         }
+            //     })
+            //     .then(data => {
+            //         console.log("Success:", data);
+            //         alert("Registration successful!");
+            //         form1E1.reset();
+            //     })
+            //     .catch(error => {
+            //         console.error("Error:", error);
+            //         alert("Registration failed. Please try again.");
+            //     });
+            // }
         });
