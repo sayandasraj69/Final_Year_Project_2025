@@ -1,89 +1,110 @@
 let allDoctors = null;
-fetch("http://localhost:8080/all")
-    .then(response => response.json())
-    .then(data => {
-        allDoctors = data;
-        console.log(allDoctors);
-        findDoctorById();
-    })
-    .catch(error => console.error("Error fetching doctors:", error));
 
-//   find the doctor by id
-function findDoctorById() {
-    let detail = document.querySelector(".doctor-details");
-    let doctorId = new URLSearchParams(window.location.search).get("docId");
-    let doctor = allDoctors.find(doctor => doctor.docId == doctorId);
+// Get doctorId from URL
+const doctorId = new URLSearchParams(window.location.search).get("docId");
 
-    if (!doctor) {
-        detail.innerHTML = "<p>Doctor not found.</p>";
-        return;
-    }
-    //   doctor details
-    detail.innerHTML = `
-    <div class="doctor-info">
-        <h2>${doctor.doctorName}</h2>
-        <p>Specializations: ${doctor.specializations.join(", ")}</p>
-    </div>
-`;
-}
-// showing doctor schedule
-let doctorId = new URLSearchParams(window.location.search).get("docId");
-//   show doctor schedule
-function showDoctorSchedule() {
-    let scheduleContainer = document.querySelector(".doctor-schedule");
-    scheduleContainer.innerHTML = ""; // Clear previous schedule
-
-    // Fetch the doctor's schedule
-    fetch(`http://localhost:8080/${doctorId}/details`)
+// Main function to fetch and display all doctor details
+function showDoctorDetails() {
+    fetch(`http://localhost:8080/doctor/${doctorId}/details`)
         .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if (!data || !data.schedule || data.schedule.length === 0) {
-                scheduleContainer.innerHTML = "<p>No schedule available.</p>";
+        .then(doctor => {
+            if (!doctor) {
+                document.querySelector(".doctor-details").innerHTML = "<p>Doctor not found.</p>";
                 return;
             }
 
-            // Display the schedule
-            data.schedule.forEach(day => {
-                let dayElement = document.createElement("div");
-                dayElement.classList.add("schedule-day");
-                dayElement.innerHTML = `
-                    <input type="date" value="${getDateOfWeekday(day.weekday)}">
-                    <label><h2>${day.weekday}</h2></label>
+            // Doctor Info
+            document.getElementById("doctor-name").textContent = doctor.doctorName || "Unknown Name";
 
-                  `;
+            // Degrees
+            let degreeText = doctor.degree && doctor.degree.length > 0
+                ? "Degrees: " + doctor.degree.join(", ")
+                : "No degrees listed";
 
-                day.timings.forEach(slot => {
-                    let slotElement = document.createElement("div");
-                    slotElement.classList.add("schedule-slot");
-                    slotElement.innerHTML = `
-                        <p><strong>Time:</strong> ${slot.timeRange}</p>
-                   
-                    `;
-                    dayElement.appendChild(slotElement);
+            // Specializations
+            let specializationText = doctor.specialization && doctor.specialization.length > 0
+                ? "Specializations: " + doctor.specialization.join(", ")
+                : "No specialization listed";
+
+            // Show degrees and specializations together
+            document.getElementById("doctor-specialization").innerHTML = `${degreeText}<br>${specializationText}`;
+
+            // Schedule
+            const scheduleContainer = document.querySelector(".doctor-schedule");
+            scheduleContainer.innerHTML = "<h2>Doctor's Schedule</h2>";
+
+            if (!doctor.schedule || doctor.schedule.length === 0) {
+                scheduleContainer.innerHTML += "<p>No schedule available.</p>";
+            } else {
+                doctor.schedule.forEach(day => {
+                    let dayElement = document.createElement("div");
+                    dayElement.classList.add("schedule-day");
+                    dayElement.innerHTML = `<h3>${day.scheduleDay || day.weekday || "Day"}</h3>`;
+
+                    if (day.timings && day.timings.length > 0) {
+                        day.timings.forEach(slot => {
+                            let slotElement = document.createElement("div");
+                            slotElement.classList.add("schedule-slot");
+                            slotElement.innerHTML = `
+                                <p>
+                                    <strong>Time:</strong> ${slot.timingRange || slot.timeRange || ""} <br>
+                                    <strong>City:</strong> ${slot.city || ""} <br>
+                                    <strong>Center:</strong> ${slot.center || ""}
+                                </p>
+                            `;
+                            dayElement.appendChild(slotElement);
+                        });
+                    } else {
+                        dayElement.innerHTML += "<p>No timings available.</p>";
+                    }
+
+                    scheduleContainer.appendChild(dayElement);
                 });
-
-                scheduleContainer.appendChild(dayElement);
-            });
+            }
         })
         .catch(error => {
-            console.error("Error fetching schedule:", error);
-            scheduleContainer.innerHTML = "<p>Error fetching schedule.</p>";
+            console.error("Error fetching doctor details:", error);
+            document.querySelector(".doctor-details").innerHTML = "<p>Error fetching doctor details.</p>";
         });
 }
-//  show doctor schedule
-showDoctorSchedule();
 
-function getDateOfWeekday(weekday) {
-    const weekdayMap = {
-        "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
-        "Thursday": 4, "Friday": 5, "Saturday": 6
-    };
-    const today = new Date();
-    const todayDay = today.getDay();
-    const targetDay = weekdayMap[weekday];
-    const diff = (targetDay + 7 - todayDay) % 7;
-    const date = new Date(today);
-    date.setDate(today.getDate() + diff);
-    return date.toISOString().split('T')[0];
+// Call the function on page load
+showDoctorDetails();
+
+// show similar doctors search by similar specialization
+function showSimilarDoctors() {
+    if (!allDoctors) {
+        console.error("All doctors data is not available.");
+        return;
+    }
+
+    const doctorName = document.getElementById("doctor-name").textContent;
+    const doctorSpecialization = document.getElementById("doctor-specialization").textContent;
+
+    const similarDoctors = allDoctors.filter(doc => {
+        return doc.doctorName !== doctorName && doc.specialization && doc.specialization.some(spec => doctorSpecialization.includes(spec));
+    });
+
+    const similarDoctorsList = document.getElementById("similar-doctors-list");
+    similarDoctorsList.innerHTML = ""; // Clear previous results
+
+    if (similarDoctors.length === 0) {
+        similarDoctorsList.innerHTML = "<p>No similar doctors found.</p>";
+        return;
+    }
+
+    similarDoctors.forEach(doctor => {
+        const doctorDiv = document.createElement("div");
+        doctorDiv.className = "doctor";
+        doctorDiv.innerHTML = `
+            <h3>${doctor.doctorName || "Unknown Name"}</h3>
+            <div>Specializations: ${doctor.specialization ? doctor.specialization.join(", ") : "No specialization listed"}</div>
+        `;
+
+        doctorDiv.addEventListener("click", () => {
+            window.location.href = `docDetail.html?docId=${doctor.docId}`;
+        });
+
+        similarDoctorsList.appendChild(doctorDiv);
+    });
 }
