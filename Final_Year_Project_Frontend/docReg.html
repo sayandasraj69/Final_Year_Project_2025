@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
+    <title>Doctor Registration</title>
     <link rel="stylesheet" href="docReg.css">
 </head>
 
@@ -14,7 +14,7 @@
         <form id="registrationForm">
             <div class="form-group">
                 <label for="doctorname">Doctorname</label>
-                <input type="text" id="doc_name" name="doc_name" placeholder="Enter your doctorname" required>
+                <input type="text" id="doctorname" name="doc_name" placeholder="Enter your doctorname" required>
                 <span class="error-message" id="doctornameError">Doctorname is required.</span>
             </div>
             <div class="form-group">
@@ -22,17 +22,17 @@
                 <input type="email" id="email" name="doc_email" placeholder="Enter your email" required>
                 <span class="error-message" id="emailError">Email is required.</span>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="qualification">Qualification</label>
                 <select id="qualification" name="qualification" >
                     <option value="">Select qualification</option>
                 </select>
                 <span class="error-message" id="qualificationError">Qualification is required.</span>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="specialization">Specialization</label>
-                <select id="specialization" name="specialization" >
-                    <option value="">Select specialization</option>
+                <select id="specialization" name="specialization" multiple>
+                    <option value="" disabled>Select specialization</option>
                 </select>
                 <span class="error-message" id="specializationError">Specialization is required.</span>
             </div>

@@ -42,19 +42,22 @@ form1E1.addEventListener("submit", event => {
     }
 
     // Validate qualification
-    const qualification = document.getElementById("qualification");
-    const qualificationError = document.getElementById("qualificationError");
-    if (qualification.value.trim() === "") {
-        qualificationError.style.display = "block";
-        isValid = false;
-    } else {
-        qualificationError.style.display = "none";
-    }
+    // const qualification = document.getElementById("qualification");
+    // const qualificationError = document.getElementById("qualificationError");
+    // if (qualification.value.trim() === "") {
+    //     qualificationError.style.display = "block";
+    //     isValid = false;
+    // } else {
+    //     qualificationError.style.display = "none";
+    // }
 
     // Validate specialization
     const specialization = document.getElementById("specialization");
     const specializationError = document.getElementById("specializationError");
-    if (specialization.value.trim() === "") {
+    const selectedSpecializations = Array.from(specialization.selectedOptions).map(opt => opt.value)
+        .filter(val => val !== "");
+
+    if (selectedSpecializations.length === 0) {
         specializationError.style.display = "block";
         isValid = false;
     } else {
@@ -75,6 +78,7 @@ form1E1.addEventListener("submit", event => {
     if (isValid) {
         const formData = new FormData(form1E1);
         const data = Object.fromEntries(formData);
+        data.specialization = selectedSpecializations; // override with array
 
         console.log("Form Data:", data);
         fetch("http://localhost:8080/doctor/register", {
