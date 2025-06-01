@@ -1,8 +1,8 @@
-  const allDoctors = [];
+const allDoctors = [];
 
 const doctorList = document.getElementById("doctors-list");
 
-fetch("http://localhost:8080/all")
+fetch("http://localhost:8080/doctor/all")
   .then(response => response.json())
   .then(data => {
     allDoctors.push(...data);
@@ -21,22 +21,20 @@ function displayDoctors(doctors) {
 
   doctors.forEach(doctor => {
     const doctorName = doctor.doctorName || "Unknown Name";
-    const specializations = doctor.specializations || []; // Assuming specializations is a property
-
-    const doctorDiv = document.createElement("div");
-    doctorDiv.className = "doctor";
-    
-    const specializationText = specializations.length > 0 
-      ? specializations.join(", ") 
+    const specializations = doctor.specializations || [];
+    const specializationText = specializations.length > 0
+      ? specializations.join(", ")
       : "No specialization listed";
 
+    // Create a container for each doctor
+    const doctorDiv = document.createElement("div");
+    doctorDiv.className = "doctor";
     doctorDiv.innerHTML = `
       <h3>${doctorName}</h3>
-      <p>Specializations: ${specializationText}</p>
+      <div>Specializations: ${specializationText}</div>
     `;
 
-doctorDiv.addEventListener("click", () => {
-      // Redirect to the doctor details page with the doctor's ID
+    doctorDiv.addEventListener("click", () => {
       window.location.href = `docDetail.html?docId=${doctor.docId}`;
     });
 
