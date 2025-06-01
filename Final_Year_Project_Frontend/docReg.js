@@ -56,7 +56,10 @@
             // Validate specialization
             const specialization = document.getElementById("specializations");
             const specializationError = document.getElementById("specializationError");
-            const selectedSpecializations = Array.from(specialization.selectedOptions).map(opt => opt.value);
+            const selectedSpecializations = Array.from(specialization.selectedOptions).map(opt => ({
+                specId: parseInt(opt.value), // or 'id' if your backend expects 'id'
+                specName: opt.textContent
+            }));
 
             if (selectedSpecializations.length === 0) {
                 specializationError.style.display = "block";
@@ -79,7 +82,7 @@
             if (isValid) {
                 const formData = new FormData(form1E1);
                 const data = Object.fromEntries(formData);
-                data.specialization = selectedSpecializations; // override with array
+                data.specializations = selectedSpecializations; // Use the correct property name
                 console.log(data);
                 
                 fetch("http://localhost:8080/doctor/register", {
