@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking</title>
+    <style>
+        body {
+    background: #f5f7fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    color: #22223b;
+}
+
+form#appointmentForm {
+    background: #fff;
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 32px 28px 24px 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(34, 34, 59, 0.08);
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 500;
+    color: #22223b;
+}
+
+input[type="date"],
+input[type="time"],
+input[type="text"],
+select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #bfc0c0;
+    border-radius: 5px;
+    font-size: 1rem;
+    background: #f8f9fa;
+    transition: border-color 0.2s;
+}
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus {
+    border-color: #4ea8de;
+    outline: none;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 11px 0;
+    background: #4ea8de;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+    background: #277da1;
+}
+    </style>
+</head>
+<body>
+    <h1>Book an Appointment</h1>
+    <form id="appointmentForm">
+        <div class="form-group">
+            <label for="user">Enter your name</label>
+            <input type="text" id="user" name="user" placeholder="Enter your name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="date">Select Date</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+        <div class="form-group">
+            <label for="time">Select Time</label>
+            <input type="time" id="time" name="time" required>
+        </div>
+        <button type="submit">Book Appointment</button>
+    </form>
+</body>
+</html>
