@@ -31,11 +31,11 @@ public class Doctors {
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "DoctorDegrees",
+            name = "DoctorQualifications",
             joinColumns = @JoinColumn(name = "docId"),
-            inverseJoinColumns = @JoinColumn(name = "degId")
+            inverseJoinColumns = @JoinColumn(name = "qualId")
     )
-    private List<Degrees> degrees;
+    private List<Qualifications> qualifications;
 
     @ManyToMany(cascade = {
             CascadeType.MERGE
@@ -48,21 +48,21 @@ public class Doctors {
     )
     private List<Specializations> specializations;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "DoctorCities",
-            joinColumns = @JoinColumn(name = "docId"),
-            inverseJoinColumns = @JoinColumn(name = "cityId")
-    )
-    private List<City> cities;
+//    @ManyToMany(cascade = CascadeType.MERGE)
+//    @JoinTable(
+//            name = "DoctorCities",
+//            joinColumns = @JoinColumn(name = "docId"),
+//            inverseJoinColumns = @JoinColumn(name = "cityId")
+//    )
+//    private List<City> cities;
 
-    @ManyToMany
-    @JoinTable(
-            name = "DoctorCenter",
-            joinColumns = @JoinColumn(name = "cenId"),
-            inverseJoinColumns = @JoinColumn(name = "docId")
-    )
-    private List<Centers> center;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "DoctorCenter",
+//            joinColumns = @JoinColumn(name = "cenId"),
+//            inverseJoinColumns = @JoinColumn(name = "docId")
+//    )
+//    private List<Centers> center;
 
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)

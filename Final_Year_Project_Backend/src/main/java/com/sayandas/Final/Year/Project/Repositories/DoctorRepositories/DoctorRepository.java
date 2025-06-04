@@ -35,14 +35,14 @@ public interface DoctorRepository extends JpaRepository<Doctors,Integer> {
     List<Map<String, Object>> getDoctorDetailsById(@Param("doctorId") Integer doctorId);
 
     @Query("SELECT d.docName AS doctorName, " +
-            "deg.degName AS degree, " +
+            "q.qualName AS degree, " +
             "spec.specName AS specialization, " +
             "sch.weekDay AS scheduleDay, " +
             "t.timingId AS timingId, t.timeRange AS timeRange, " +
             "t.noOfPatients AS noOfPatients, " +
             "t.city.cityName AS city, t.center.cenName AS center " +
             "FROM Doctors d " +
-            "LEFT JOIN d.degrees deg " +
+            "LEFT JOIN d.qualifications q " +
             "LEFT JOIN d.specializations spec " +
             "LEFT JOIN d.schedule sch " +
             "LEFT JOIN sch.timings t " +

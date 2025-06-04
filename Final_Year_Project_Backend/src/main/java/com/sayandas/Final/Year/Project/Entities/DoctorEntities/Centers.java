@@ -24,6 +24,6 @@ public class Centers {
     @JoinColumn(name = "cityId")
     private City city;
 
-    @ManyToMany(mappedBy = "center")
-    private List<Doctors> doctors;
+//    @ManyToMany(mappedBy = "center")
+//    private List<Doctors> doctors;
 }

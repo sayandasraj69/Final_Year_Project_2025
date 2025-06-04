@@ -77,6 +77,11 @@ public class Doctor_Controller {
          return new ResponseEntity<>(doctorService.getAllSpecializationNames(),HttpStatus.FOUND);
     }
 
+    @GetMapping("/qualifications")
+    public ResponseEntity<List<Object>> getAllQualificationNames() {
+        return new ResponseEntity<>(doctorService.getAllQualificationNames(),HttpStatus.FOUND);
+    }
+
 //    @GetMapping("/{id}/details")
 //    public ResponseEntity<Map<String, Object>> getDoctorDetailsById(@PathVariable Integer id) {
 //        Map<String, Object> doctorDetails = doctorService.getDoctorDetailsById(id);

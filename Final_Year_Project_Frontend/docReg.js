@@ -14,7 +14,21 @@ fetch("http://localhost:8080/doctor/specializations")
     })
     .catch(error => console.error("Error fetching specializations:", error));
 
-// (Do the same for qualification if needed)
+// Populate qualification dropdown on page load
+fetch("http://localhost:8080/doctor/qualifications")
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        const qualificationDropdown = document.getElementById("qualification");
+        data.forEach(qualification => {
+            console.log(qualification);
+            const option = document.createElement("option");
+            option.value = qualification[0];
+            option.textContent = qualification[1];
+            qualificationDropdown.appendChild(option);
+        });
+    })
+    .catch(error => console.error("Error fetching qualifications:", error));
 
 const form1E1 = document.querySelector("#registrationForm");
 form1E1.addEventListener("submit", event => {
