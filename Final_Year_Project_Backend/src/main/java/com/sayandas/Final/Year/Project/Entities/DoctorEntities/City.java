@@ -23,6 +23,6 @@ public class City {
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Centers> centers;
 
-    @ManyToMany(mappedBy = "cities")
-    private List<Doctors> doctors;
+//    @ManyToMany(mappedBy = "cities")
+//    private List<Doctors> doctors;
 }

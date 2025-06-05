@@ -19,11 +19,11 @@ public class FinalYearProjectApplication {
 
 //    @Bean
     public CommandLineRunner commandLineRunner(DoctorRepository doctorRepository, SpecRepository specRepository,
-                                               CityRepository cityRepository, CenterRepository centerRepository, DegRepository degRepository) {
+                                               CityRepository cityRepository, CenterRepository centerRepository, QualRepository qualRepository) {
         return args -> {
-            List<Degrees> degrees = List.of(
-                    degRepository.findById(1).get(),
-                    degRepository.findById(2).get()
+            List<Qualifications> degrees = List.of(
+                    qualRepository.findById(1).get(),
+                    qualRepository.findById(2).get()
             );
             List<Specializations> specializations = List.of(
                     specRepository.findById(1).get(),
@@ -60,7 +60,7 @@ public class FinalYearProjectApplication {
                     .docEmail("sayan@gmail.com")
                     .docPhn("123456")
                     .about("Hi I am Sayan ")
-                    .degrees(degrees)
+                    .qualifications(degrees)
                     .specializations(specializations)
                     .schedule(schedule)
                 .build();
@@ -111,13 +111,13 @@ public class FinalYearProjectApplication {
     }
 
 //    @Bean
-    public CommandLineRunner saveDegrees(DegRepository degRepository) {
+    public CommandLineRunner saveDegrees(QualRepository degRepository) {
         return args -> {
-            List<Degrees> degrees = List.of(
-                    Degrees.builder().degName("MBBS").build(),
-                    Degrees.builder().degName("MS").build(),
-                    Degrees.builder().degName("MD").build(),
-                    Degrees.builder().degName("DM").build()
+            List<Qualifications> degrees = List.of(
+                    Qualifications.builder().qualName("MS").build(),
+                    Qualifications.builder().qualName("MBBS").build(),
+                    Qualifications.builder().qualName("MD").build(),
+                    Qualifications.builder().qualName("DM").build()
             );
             degRepository.saveAll(degrees);
         };

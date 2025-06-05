@@ -3,10 +3,11 @@ package com.sayandas.Final.Year.Project.Services;
 import com.sayandas.Final.Year.Project.DTOs.DoctorDetailsDTO;
 import com.sayandas.Final.Year.Project.DTOs.ScheduleDTO;
 import com.sayandas.Final.Year.Project.DTOs.TimingDTO;
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Degrees;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Qualifications;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
 import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.DoctorRepository;
+import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.QualRepository;
 import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.SpecRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ public class Doctor_Service {
     DoctorRepository doctorRepository;
     @Autowired
     SpecRepository specRepository;
+    @Autowired
+    QualRepository qualRepository;
 //    @Autowired
 //    SpecRepository specializationRepository;
 //    ObjectMapper objectMapper = new ObjectMapper();
@@ -109,6 +112,10 @@ public class Doctor_Service {
     public List<Object> getAllSpecializationNames() {
         return specRepository.findAllSpecializations();
     }
+    public List<Object> getAllQualificationNames() {
+        return qualRepository.findAllQualifications();
+    }
+
 
     public Map<String, Object> getDoctorDetailsById1(Integer doctorId) {
         List<Map<String, Object>> queryResult = doctorRepository.findDoctorDetailsById(doctorId);
@@ -160,8 +167,8 @@ public class Doctor_Service {
         Doctors doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
 
-        List<String> degrees = doctor.getDegrees().stream()
-                .map(Degrees::getDegName)
+        List<String> degrees = doctor.getQualifications().stream()
+                .map(Qualifications::getQualName)
                 .collect(Collectors.toList());
 
         List<String> specializations = doctor.getSpecializations().stream()
