@@ -9,52 +9,58 @@
 </head>
 
 <body>
-    <div class="registration-container">
-        <h2>DOCTOR Registration</h2>
-        <form id="registrationForm">
-            <div class="form-group">
-                <label for="doctorName">Doctor Name</label>
-                <input type="text" id="doctorName" name="docName" placeholder="Enter your doctor name" required>
-                <span class="error-message" id="doctorNameError">Doctor name is required.</span>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="docEmail" placeholder="Enter your email" required>
-                <span class="error-message" id="emailError">Email is required.</span>
-            </div>
-            <div class="form-group">
-                <label for="qualification">Qualification</label>
-                <select id="qualification" name="qualification" >
-                    <option value="">Select qualification</option>
-                </select>
-                <span class="error-message" id="qualificationError">Qualification is required.</span>
-            </div>
-            <div class="form-group">
-                <label for="specializations">Specialization</label>
-                <select id="specializations" name="specializations" multiple>
-                    <option value="" disabled>Select specialization</option>
-                </select>
-                <span class="error-message" id="specializationError">Specialization is required.</span>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="docPhn" placeholder="Enter your phone number" required>
-                <span class="error-message" id="phoneError">Phone number is required.</span>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                <span class="error-message" id="passwordError">Password is required.</span>
-            </div>
-            <div class="form-group">
-                <label for="docImage">Doctor Image</label>
-                <input type="file" name="docImage" accept="image/*" required />
-                <span class="error-message" id="imageError">Image is required.</span>
-            </div>
-            <div class="form-group">
-                <button type="submit">Register</button>
-            </div>
-        </form>
+    <div class="registration-main-wrapper">
+        <div class="registration-image-side">
+            <img src="prescripto_assets[1]/assets/assets_frontend/about_image.png"
+                alt="Doctor Registration Illustration">
+        </div>
+        <div class="registration-container">
+            <h2>DOCTOR Registration</h2>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="doctorName">Doctor Name</label>
+                    <input type="text" id="doctorName" name="docName" placeholder="Enter your doctor name" required>
+                    <span class="error-message" id="doctorNameError">Doctor name is required.</span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="docEmail" placeholder="Enter your email" required>
+                    <span class="error-message" id="emailError">Email is required.</span>
+                </div>
+                <div class="form-group">
+                    <label for="qualification">Qualification</label>
+                    <select id="qualification" name="qualification">
+                        <option value="">Select qualification</option>
+                    </select>
+                    <span class="error-message" id="qualificationError">Qualification is required.</span>
+                </div>
+                <div class="form-group">
+                    <label for="specializations">Specialization</label>
+                    <select id="specializations" name="specializations" multiple>
+                        <option value="" disabled>Select specialization</option>
+                    </select>
+                    <span class="error-message" id="specializationError">Specialization is required.</span>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="docPhn" placeholder="Enter your phone number" required>
+                    <span class="error-message" id="phoneError">Phone number is required.</span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <span class="error-message" id="passwordError">Password is required.</span>
+                </div>
+                <div class="form-group">
+                    <label for="docImage">Doctor Image</label>
+                    <input type="file" name="docImage" accept="image/*" required />
+                    <span class="error-message" id="imageError">Image is required.</span>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Register</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="docReg.js"></script>

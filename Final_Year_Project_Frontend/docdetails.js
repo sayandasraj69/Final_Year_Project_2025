@@ -13,6 +13,7 @@ function showDoctorDetails() {
                 return;
             }
 
+
             // Doctor Info
             document.getElementById("doctor-name").textContent = doctor.doctorName || "Unknown Name";
 
