@@ -44,6 +44,7 @@ body {
     cursor: pointer;
   }
   
+
   #specialization-dropdown ,#searchBar {
     padding: 10px;
     border: 1px solid #ccc;
@@ -66,56 +67,26 @@ body {
     background-color: #0056b3;
   }
   
-  .doctors-list {
-    margin: 20px;
-  }
+
   
-  .scrollable-container {
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    padding: 10px;
-  }
-  
-  .doctor-card {
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 15px;
-    width: 200px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .doctor-card img {
-    width: 100%;
-    border-radius: 50%;
-  }
-  
-  .doctor-card h3 {
-    margin: 10px 0 5px;
-  }
-  
-  .doctor-card p {
-    color: rgb(0, 0, 0);
-    font-size: 14px;
-  }
   /* Doctor cards container */
-#doctors {
+#doctors-list {
+  background: #f0f4f8;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   margin-top: 20px;
+  justify-content: center;
+  padding: 0 20px;
 }
 
 /* Individual doctor card */
 .doctor {
-  background: #2584e3;
-  color: #ffffff;
+  background: #54a5f6;
+  color: #000000;
   text-align: center;
   font-size: 16px;
   margin: 4px 4px 0;
-
   font-weight: bold;
   border: 1px solid #000000;
   border-radius: 8px;
