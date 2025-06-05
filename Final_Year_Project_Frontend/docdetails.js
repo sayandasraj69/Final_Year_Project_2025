@@ -18,9 +18,13 @@ function showDoctorDetails() {
             document.getElementById("doctor-name").textContent = doctor.doctorName || "Unknown Name";
 
             // Degrees
-            let degreeText = doctor.degree && doctor.degree.length > 0
+            let degreeText = (doctor.degree && doctor.degree.length > 0)
                 ? "Degrees: " + doctor.degree.join(", ")
-                : "No degrees listed";
+                : (doctor.qualification && doctor.qualification.length > 0)
+                    ? "Degrees: " + doctor.qualification.join(", ")
+                    : (doctor.qualifications && doctor.qualifications.length > 0)
+                        ? "Degrees: " + doctor.qualifications.join(", ")
+                        : "No degrees listed";
 
             // Specializations
             let specializationText = doctor.specialization && doctor.specialization.length > 0
