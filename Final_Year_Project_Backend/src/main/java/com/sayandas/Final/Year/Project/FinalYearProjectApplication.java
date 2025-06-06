@@ -127,7 +127,7 @@ public class FinalYearProjectApplication {
     public CommandLineRunner saveCities(CityRepository cityRepository) {
         return args -> {
             List<City> cities = List.of(
-                    City.builder().cityName("Kolkata").build(), 
+                    City.builder().cityName("Kolkata").build(),
                     City.builder().cityName("Siliguri").build(),
                     City.builder().cityName("Asansol").build(),
                     City.builder().cityName("Durgapur").build(),
