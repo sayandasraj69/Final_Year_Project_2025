@@ -2,10 +2,10 @@
 fetch("http://localhost:8080/doctor/specializations")
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         const specializationDropdown = document.getElementById("specializations");
         data.forEach(specialization => {
-            console.log(specialization);
+            // console.log(specialization);
             const option = document.createElement("option");
             option.value = specialization[0];
             option.textContent = specialization[1];
@@ -18,10 +18,10 @@ fetch("http://localhost:8080/doctor/specializations")
 fetch("http://localhost:8080/doctor/qualifications")
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         const qualificationDropdown = document.getElementById("qualification");
         data.forEach(qualification => {
-            console.log(qualification);
+            // console.log(qualification);
             const option = document.createElement("option");
             option.value = qualification[0];
             option.textContent = qualification[1];
