@@ -21,7 +21,7 @@ body {
     margin-left: 10px;
     padding: 8px 15px;
     background-color: white;
-    color: #007bff;
+    color: #4a90e2;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -66,7 +66,26 @@ body {
   #search-button:hover {
     background-color: #0056b3;
   }
+
   
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
   /* Doctor cards container */
@@ -82,7 +101,7 @@ body {
 
 /* Individual doctor card */
 .doctor {
-  background: #54a5f6;
+  background: #4a87cc;
   color: #000000;
   text-align: center;
   font-size: 16px;
@@ -103,33 +122,4 @@ body {
   background: #84c4e1;
 }
 
-/* doctor details */
-.doctor-details {
-  background: #ffffff;
-  border: 1px solid #dddddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 20px;
-}
 
-.doctor-details h2 {
-  margin-top: 0;
-}
-
-.doctor-details p {
-  margin: 4px 0;
-}
-/* doctor info */
-.doctor-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.doctor-info h2 {
-  margin: 0;
-  font-size: 24px;
-}
-.doctor-info p {
-  margin: 0 10px;
-  font-size: 16px;
-}

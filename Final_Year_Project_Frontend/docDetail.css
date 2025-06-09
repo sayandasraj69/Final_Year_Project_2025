@@ -1,0 +1,145 @@
+/* Main wrapper */
+.doctor-profile-wrapper {
+    max-width: 1100px;
+    margin: 40px auto 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    overflow: hidden;
+}
+
+/* Header with blue gradient */
+.doctor-profile-header {
+    position: relative;
+    height: 180px;
+    background: linear-gradient(120deg, #b6d0f7 0%, #4a90e2 100%);
+}
+
+.doctor-header-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    z-index: 1;
+}
+
+.doctor-header-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 32px 48px;
+}
+
+.doctor-photo-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    background: #f0f0f0;
+}
+
+.doctor-header-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.doctor-header-degree,
+.doctor-header-hospital {
+    color: #eaf3ff;
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+}
+
+/* Main info area */
+.doctor-profile-main {
+    display: flex;
+    gap: 32px;
+    padding: 36px 48px 36px 48px;
+    background: #fff;
+}
+
+.doctor-profile-left, .doctor-profile-right {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.info-block {
+    background: #f8fbff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(74,144,226,0.06);
+    padding: 20px 24px;
+}
+
+.info-title {
+    color: #4a90e2;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+#doctor-contact, #doctor-address, #doctor-experience, #doctor-fee-block {
+    font-size: 1.05rem;
+    color: #2a3b5d;
+    margin-bottom: 6px;
+}
+
+.doctor-specialization-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.doctor-specialization-tags span {
+    background: #eaf3ff;
+    color: #2a3b5d;
+    border-radius: 16px;
+    padding: 5px 18px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.book-btn {
+    margin-top: 18px;
+    padding: 12px 34px;
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(74,144,226,0.08);
+}
+.book-btn:hover {
+    background: #357abd;
+}
+
+/* Similar doctors section */
+.similar-doctors {
+    max-width: 1100px;
+    margin: 36px auto 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    padding: 24px 32px;
+}
+
+.similar-doctors h2 {
+    color: #4a90e2;
+    margin-top: 0;
+    margin-bottom: 18px;
+}
+
+
+

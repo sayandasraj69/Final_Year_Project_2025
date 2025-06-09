@@ -2,10 +2,10 @@
 fetch("http://localhost:8080/doctor/specializations")
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         const specializationDropdown = document.getElementById("specializations");
         data.forEach(specialization => {
-            console.log(specialization);
+            // console.log(specialization);
             const option = document.createElement("option");
             option.value = specialization[0];
             option.textContent = specialization[1];
@@ -18,10 +18,10 @@ fetch("http://localhost:8080/doctor/specializations")
 fetch("http://localhost:8080/doctor/qualifications")
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        const qualificationDropdown = document.getElementById("qualification");
+        // console.log(data);
+        const qualificationDropdown = document.getElementById("qualifications");
         data.forEach(qualification => {
-            console.log(qualification);
+            // console.log(qualification);
             const option = document.createElement("option");
             option.value = qualification[0];
             option.textContent = qualification[1];
@@ -57,16 +57,6 @@ form1E1.addEventListener("submit", event => {
         emailError.style.display = "none";
     }
 
-    // Validate qualification
-    // const degrees = document.getElementById("deegrees");
-    // const qualificationError = document.getElementById("qualificationError");
-    // if (degrees.value.trim() === "") {
-    //     qualificationError.style.display = "block";
-    //     isValid = false;
-    // } else {
-    //     qualificationError.style.display = "none";
-    // }
-
     // Validate specialization
     const specialization = document.getElementById("specializations");
     const specializationError = document.getElementById("specializationError");
@@ -75,11 +65,26 @@ form1E1.addEventListener("submit", event => {
         specName: opt.textContent
     }));
 
+    // Validate qualification
+    const qualification = document.getElementById("qualifications");
+    const qualificationError = document.getElementById("qualificationError");
+    const selectedQualifications = Array.from(qualification.selectedOptions).map(opt => ({
+        qualId: parseInt(opt.value), // or 'id' if your backend expects 'id'
+        qualName: opt.textContent
+    }));
+
     if (selectedSpecializations.length === 0) {
         specializationError.style.display = "block";
         isValid = false;
     } else {
         specializationError.style.display = "none";
+    }
+
+    if (selectedQualifications.length === 0) {
+        qualificationError.style.display = "block";
+        isValid = false;
+    } else {
+        qualificationError.style.display = "none";
     }
 
     // Uncomment and validate password if needed
@@ -103,10 +108,11 @@ form1E1.addEventListener("submit", event => {
             docPhn: document.getElementById("phone").value,
 
             // Add password if you want:
-            // password: document.getElementById("password").value,
-            specializations: selectedSpecializations // already an array of objects
+            password: document.getElementById("password").value,
+            specializations: selectedSpecializations, // already an array of objects
+            qualifications: selectedQualifications
         };
-
+        console.log(doctor);
         // Append doctor JSON as a Blob
         formData.append("doctor", new Blob([JSON.stringify(doctor)], { type: "application/json" }));
 
@@ -115,7 +121,7 @@ form1E1.addEventListener("submit", event => {
         if (imageFile) {
             formData.append("image", imageFile);
         }
-
+        console.log(doctor);
         // Send via multipart/form-data
         fetch("http://localhost:8080/doctor/register", {
             method: "POST",

@@ -24,8 +24,8 @@ public class Doctor_Controller {
     private ResponseEntity<?> addDoctor(@RequestPart Doctors doctor, @RequestPart MultipartFile image) {
         try {
             Doctors savedDoctor = doctorService.addDoctor(doctor, image);
-//            return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
+//            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
