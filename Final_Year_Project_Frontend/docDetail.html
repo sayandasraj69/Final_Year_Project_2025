@@ -5,30 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="docDetail.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h2>Doctor's Details</h2>
-    <div class="doctor-details">
-        <!-- Doctor details will be populated here -->
-
-        <h1 id="doctor-name"></h1>
-        <p id="doctor-specialization"></p>
-        <div class="doctor-schedule">
-            <h2>Doctor's Schedule</h2>
+    <div class="doctor-profile-wrapper">
+        <div class="doctor-profile-header">
+            <div class="doctor-header-bg"></div>
+            <div class="doctor-header-content">
+                <img src="" alt="Doctor Photo" class="doctor-photo-large" id="doctor-photo" />
+                <div>
+                    <h2 id="doctor-name" class="doctor-header-name"></h2>
+                    <div id="doctor-degree" class="doctor-header-degree"></div>
+                    <div id="doctor-hospital" class="doctor-header-hospital"></div>
+                </div>
+            </div>
         </div>
-        <a href="apmntbook.html"><button>Book Appointment</button></a>
+        <div class="doctor-profile-main">
+            <div class="doctor-profile-left">
+                <div class="info-block">
+                    <div class="info-title">Contact Info</div>
+                    <div id="doctor-contact"></div>
+                    <div id="doctor-address"></div>
+                </div>
+                <div class="info-block">
+                    <div class="info-title">Appointment Schedule</div>
+                    <div id="doctor-experience"></div>
+                    <div id="doctor-fee-block">Fee: ₹<span id="doctor-fee"></span></div>
+                    <a href="apmntbook.html"><button class="book-btn">Book Appointment</button></a>
+                </div>
+            </div>
+            <div class="doctor-profile-right">
+                <div class="info-block">
+                    <div class="info-title">Specialty</div>
+                    <div id="doctor-specialization" class="doctor-specialization-tags"></div>
+                </div>
+                <!-- Add more info-blocks here for Experience, Achievements, etc. -->
+            </div>
+        </div>
     </div>
     <div class="similar-doctors">
         <h2>Similar Doctors</h2>
-        <div id="similar-doctors-list">
-            <!-- Similar doctors will be populated here -->
-        </div>
+        <div id="similar-doctors-list"></div>
     </div>
-
     <script src="docdetails.js"></script>
-
 </body>
 
 </html>

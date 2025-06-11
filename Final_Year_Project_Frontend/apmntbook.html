@@ -4,114 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appointment Booking</title>
-    <style>
-        body {
-    background: #f5f7fa;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-h1 {
-    text-align: center;
-    margin-top: 40px;
-    color: #22223b;
-}
-
-form#appointmentForm {
-    background: #fff;
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 32px 28px 24px 28px;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(34, 34, 59, 0.08);
-}
-
-.form-group {
-    margin-bottom: 22px;
-}
-
-label {
-    display: block;
-    margin-bottom: 7px;
-    font-weight: 500;
-    color: #22223b;
-}
-
-input[type="date"],
-input[type="time"],
-input[type="text"],
-select {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1px solid #bfc0c0;
-    border-radius: 5px;
-    font-size: 1rem;
-    background: #f8f9fa;
-    transition: border-color 0.2s;
-}
-input[type="text"]:focus,
-input[type="date"]:focus,
-input[type="time"]:focus,
-select:focus {
-    border-color: #4ea8de;
-    outline: none;
-}
-
-button[type="submit"] {
-    width: 100%;
-    padding: 11px 0;
-    background: #4ea8de;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-button[type="submit"]:hover {
-    background: #277da1;
-}
-.doctor-card {
-    background: #8ed2ff;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    padding: 18px 20px;
-    margin: 12px 0;
-    cursor: pointer;
-    transition: box-shadow 0.2s, transform 0.2s;
-    max-width: 340px;
-}
-.doctor-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.13);
-    transform: translateY(-2px) scale(1.02);
-}
-.doctor-card-content h4 {
-    margin: 0 0 8px 0;
-    color: #1a237e;
-}
-    </style>
+    <link rel="stylesheet" href="apmntBook.css">
 </head>
 <body>
-    <h1>Book an Appointment</h1>
-    <form id="appointmentForm">
-        <div class="form-group">
-            <label for="user">Enter your name</label>
-            <input type="text" id="user" name="user" placeholder="Enter your name" required>
+    <div class="appointment-wrapper">
+        <div class="appointment-image">
+            <img src="prescripto_assets[1]/assets/assets_frontend/contact_image.png" alt="Doctor" />
         </div>
-        
-        <div class="form-group">
-            <label for="date">Select Date</label>
-            <input type="date" id="date" name="date" required>
+        <div class="appointment-form-section">
+            <h1>Book an Appointment</h1>
+            <form id="appointmentForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="user">Name</label>
+                        <input type="text" id="user" name="user" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <input type="time" id="time" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctor">Doctor</label>
+                        <input type="text" id="doctor" name="doctor" placeholder="Doctor's Name">
+                    </div>
+                </div>
+                <button type="submit">Book Appointment</button>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="time">Select Time</label>
-            <input type="time" id="time" name="time" required>
-        </div>
-        <button type="submit">Book Appointment</button>
-    </form>
+    </div>
 </body>
 </html>
