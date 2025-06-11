@@ -36,6 +36,8 @@ body {
     margin: 20px;
   }
   
+  /* specialization dropdown and search bar */
+
   .dropdown-container {
     display: flex;
     justify-content: center;
@@ -43,7 +45,6 @@ body {
     margin-top: 10px;
     cursor: pointer;
   }
-  
 
   #specialization-dropdown ,#searchBar {
     padding: 10px;
@@ -66,27 +67,6 @@ body {
   #search-button:hover {
     background-color: #0056b3;
   }
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
   /* Doctor cards container */
 #doctors-list {
