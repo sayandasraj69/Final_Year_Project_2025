@@ -6,17 +6,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table
 public class Timings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer timingId;
     private String timeRange;
-    private int noOfPatients;
+    private Integer noOfPatients;
 
     @ManyToOne
     @JoinColumn(name = "schId")
@@ -25,7 +28,11 @@ public class Timings {
     @ManyToOne
     @JoinColumn(name = "cityId")
     private City city;
+
     @ManyToOne
     @JoinColumn(name = "centerId")
     private Centers center;
+
+    @OneToMany(mappedBy = "timing", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Appointments> appointment;
 }

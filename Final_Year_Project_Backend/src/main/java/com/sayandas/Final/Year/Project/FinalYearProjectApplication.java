@@ -75,20 +75,20 @@ public class FinalYearProjectApplication {
     }
 
 //    @Bean
-    public CommandLineRunner commandLineRunner1(AppointmentsRepository appointmentsRepository) {
-        return args -> {
-            Appointments appointment = Appointments.builder()
-                    .appDate("21-05-2015")
-                    .appWeekDay("Wednesday")
-                    .appTimeRange("10:30 - 12:30")
-                    .appPatName("Sayan Das")
-                    .build();
-
-            List<Appointments> appointmentsList = new ArrayList<>();
-            appointmentsList.add(appointment);
-            appointmentsRepository.saveAll(appointmentsList);
-        };
-    }
+//    public CommandLineRunner commandLineRunner1(AppointmentsRepository appointmentsRepository) {
+//        return args -> {
+//            Appointments appointment = Appointments.builder()
+//                    .appDate("21-05-2015")
+//                    .appWeekDay("Wednesday")
+//                    .appTimeRange("10:30 - 12:30")
+//                    .appPatName("Sayan Das")
+//                    .build();
+//
+//            List<Appointments> appointmentsList = new ArrayList<>();
+//            appointmentsList.add(appointment);
+//            appointmentsRepository.saveAll(appointmentsList);
+//        };
+//    }
 
 //    @Bean
     public CommandLineRunner saveSpecs(SpecRepository specRepository) {

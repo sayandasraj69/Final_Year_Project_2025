@@ -9,41 +9,64 @@ fetch("http://localhost:8080/doctor/all")
   .then(data => {
     allDoctors.push(...data);
     displayDoctors(allDoctors);
-    populateSpecializations(allDoctors);
   })
   .catch(error => console.error("Error fetching doctors:", error));
 
-// Populate specialization dropdown from doctors' data
-function populateSpecializations(doctors) {
-  const specs = new Set();
-  doctors.forEach(doc => {
-    (doc.specializations || []).forEach(spec => specs.add(spec));
-  });
-  specializationSelect.innerHTML = '<option value="">Select Specialization</option>';
-  specs.forEach(spec => {
-    const option = document.createElement("option");
-    option.value = spec;
-    option.textContent = spec;
-    specializationSelect.appendChild(option);
-  });
-}
+// Fetch all specializations for the dropdown
+fetch("http://localhost:8080/doctor/specializations")
+  .then(response => response.json())
+  .then(data => {
+    // Do NOT reset innerHTML, so the placeholder remains
+    data.forEach(specialization => {
+      // If backend returns [id, name]
+      const specName = Array.isArray(specialization) ? specialization[1] : (specialization.name || specialization);
+      const option = document.createElement("option");
+      option.value = specName;
+      option.textContent = specName;
+      specializationSelect.appendChild(option);
+    });
+  })
+  .catch(error => console.error("Error fetching specializations:", error));
 
 // Filter doctors by specialization and name
 function filterDoctors() {
-  const selectedSpec = specializationSelect.value;
+  // Get selected specializations, ignoring empty values
+  const selectedSpecs = Array.from(specializationSelect.selectedOptions)
+    .map(opt => opt.value)
+    .filter(val => val);
+
   const searchTerm = searchBar.value.trim().toLowerCase();
+
   let filtered = allDoctors;
 
-  if (selectedSpec) {
-    filtered = filtered.filter(doc =>
-      (doc.specializations || []).includes(selectedSpec)
+  // If only specialization(s) selected
+  if (selectedSpecs.length > 0 && !searchTerm) {
+    filtered = allDoctors.filter(doc =>
+      selectedSpecs.every(spec =>
+        (doc.specializations || []).includes(spec)
+      )
     );
   }
-  if (searchTerm) {
-    filtered = filtered.filter(doc =>
+  // If only name entered
+  else if (searchTerm && selectedSpecs.length === 0) {
+    filtered = allDoctors.filter(doc =>
       (doc.doctorName || "").toLowerCase().includes(searchTerm)
     );
   }
+  // If both are used
+  else if (searchTerm && selectedSpecs.length > 0) {
+    filtered = allDoctors.filter(doc =>
+      (doc.doctorName || "").toLowerCase().includes(searchTerm) &&
+      selectedSpecs.every(spec =>
+        (doc.specializations || []).includes(spec)
+      )
+    );
+  }
+  // If neither, show all
+  else {
+    filtered = allDoctors;
+  }
+
   displayDoctors(filtered);
 }
 
