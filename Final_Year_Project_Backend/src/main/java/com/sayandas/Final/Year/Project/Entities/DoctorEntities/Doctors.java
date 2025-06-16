@@ -27,7 +27,10 @@ public class Doctors {
 
     private String docEmail;
     private String docPhn;
+    @Lob
     private String about;
+    private Integer experience;
+    private Integer fee;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(

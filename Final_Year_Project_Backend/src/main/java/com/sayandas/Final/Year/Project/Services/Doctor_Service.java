@@ -1,13 +1,13 @@
 package com.sayandas.Final.Year.Project.Services;
 
-import com.sayandas.Final.Year.Project.DTOs.DoctorDetailsDTO;
-import com.sayandas.Final.Year.Project.DTOs.ScheduleDTO;
-import com.sayandas.Final.Year.Project.DTOs.TimingDTO;
+import com.sayandas.Final.Year.Project.DTOs.*;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Qualifications;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Schedule;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
 import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.DoctorRepository;
 import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.QualRepository;
+import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.ScheduleRepository;
 import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.SpecRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,8 @@ public class Doctor_Service {
     SpecRepository specRepository;
     @Autowired
     QualRepository qualRepository;
+    @Autowired
+    ScheduleRepository scheduleRepository;
 //    @Autowired
 //    SpecRepository specializationRepository;
 //    ObjectMapper objectMapper = new ObjectMapper();
@@ -187,11 +189,36 @@ public class Doctor_Service {
                                 )).collect(Collectors.toList())
                 )).collect(Collectors.toList());
 
-        return new DoctorDetailsDTO(
-                doctor.getDocName(),
-                degrees,
-                specializations,
-                schedules
-        );
+        // Set all required fields in the DTO
+        DoctorDetailsDTO dto = new DoctorDetailsDTO();
+        dto.setDocName(doctor.getDocName());
+        dto.setDegrees(degrees);
+        dto.setSpecializations(specializations);
+        dto.setSchedules(schedules);
+        dto.setDocImageName(doctor.getDocImageName());
+        dto.setDocImageType(doctor.getDocImageType());
+        dto.setDocImageData(doctor.getDocImageData());
+        dto.setDocEmail(doctor.getDocEmail());
+        dto.setDocPhn(doctor.getDocPhn());
+        dto.setAbout(doctor.getAbout());
+        dto.setExperience(doctor.getExperience());
+        dto.setFee(doctor.getFee());
+
+        return dto;
+    }
+
+    public List<ScheduleWithTimingsDTO> getSchedulesByDoctorId(Integer docId) {
+        List<Schedule> schedules = scheduleRepository.findSchedulesWithTimingsByDoctorId(docId);
+        return schedules.stream().map(s -> new ScheduleWithTimingsDTO(
+                s.getSchId(),
+                s.getWeekDay(),
+                s.getTimings().stream().map(t -> new TimingsDTO(
+                        t.getTimingId(),
+                        t.getTimeRange(),
+                        t.getNoOfPatients(),
+                        t.getCity() != null ? t.getCity().getCityName() : null,
+                        t.getCenter() != null ? t.getCenter().getCenName() : null
+                )).collect(Collectors.toList())
+        )).collect(Collectors.toList());
     }
 }

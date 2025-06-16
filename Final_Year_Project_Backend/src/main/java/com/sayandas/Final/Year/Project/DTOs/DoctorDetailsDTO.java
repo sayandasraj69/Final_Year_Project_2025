@@ -10,8 +10,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DoctorDetailsDTO {
-    private String doctorName;
-    private List<String> degree;
-    private List<String> specialization;
-    private List<ScheduleDTO> schedule;
+    private String docName;
+    private List<String> degrees;
+    private List<String> specializations;
+    private List<ScheduleDTO> schedules;
+    private String docImageName;
+    private String docImageType;
+    private byte[] docImageData;
+    private String docEmail;
+    private String docPhn;
+    private String about;
+    private Integer experience;
+    private Integer fee;
 }

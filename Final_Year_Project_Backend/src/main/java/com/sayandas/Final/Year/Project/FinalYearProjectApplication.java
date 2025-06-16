@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +33,8 @@ public class FinalYearProjectApplication {
             );
             City city = cityRepository.findById(1).get();
             Centers center = centerRepository.findById(1).get();
-            City city1 = cityRepository.findById(1).get();
             Centers center1 = centerRepository.findById(2).get();
+
             List<Timings> timings = List.of(
                     Timings.builder()
                             .timeRange("10:00 - 12:00")
@@ -43,8 +45,26 @@ public class FinalYearProjectApplication {
                     Timings.builder()
                             .timeRange("12:00 - 14:00")
                             .noOfPatients(20)
-                            .city(city1)
+                            .city(city)
                             .center(center1)
+                            .build()
+            );
+
+            City city1 = cityRepository.findById(2).get();
+            Centers center2 = centerRepository.findById(3).get();
+
+            List<Timings> timings1 = List.of(
+                    Timings.builder()
+                            .timeRange("12:00 - 14:00")
+                            .noOfPatients(20)
+                            .city(city)
+                            .center(center1)
+                            .build(),
+                    Timings.builder()
+                            .timeRange("17:00 - 20:00")
+                            .noOfPatients(30)
+                            .city(city1)
+                            .center(center2)
                             .build()
             );
 
@@ -54,20 +74,38 @@ public class FinalYearProjectApplication {
                             .weekDay("Monday")
                             .timings(timings)
                             .build()
+                    ,
+                    Schedule.builder()
+                            .weekDay("Tuesday")
+                            .timings(timings1)
+                            .build()
                     );
+
+            byte[] imageBytes = Files.readAllBytes(Paths.get(
+                    "C:\\Users\\Sayan Das\\Downloads\\prescripto_assets\\assets\\assets_frontend/doc1.png"));
+
             Doctors doctor = Doctors.builder()
                     .docName("Sayan Das")
+                    .docImageName("doc1.png")
+                    .docImageType("image/*")
+                    .docImageData(imageBytes)
                     .docEmail("sayan@gmail.com")
                     .docPhn("123456")
-                    .about("Hi I am Sayan ")
+                    .about("Dr. Sayan Das is a dedicated and compassionate physician with over 10 years of experience " +
+                            "in providing quality healthcare. Specializing in General Medicine and Neurology," +
+                            " Dr. Das is committed to patient-centered care, continuous learning, and staying updated " +
+                            "with the latest advancements in medical science. He believes in building strong doctor-patient" +
+                            " relationships and delivering personalized treatment plans for every individual.")
+                    .experience(10)
+                    .fee(500)
                     .qualifications(degrees)
                     .specializations(specializations)
                     .schedule(schedule)
                 .build();
 
             schedule.forEach(sch -> sch.setDoctor(doctor));
-            timings.forEach(t -> t.setSchedule(schedule.get(0))); // assuming one schedule
-
+//          After building your schedule list
+            schedule.forEach(sch -> sch.getTimings().forEach(t -> t.setSchedule(sch)));
             doctorRepository.save(doctor);
         };
 

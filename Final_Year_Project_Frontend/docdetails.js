@@ -8,64 +8,64 @@ function showDoctorDetails() {
     fetch(`http://localhost:8080/doctor/${doctorId}/details`)
         .then(response => response.json())
         .then(doctor => {
+            // console.log('doctor.degrees:', doctor.degrees);
             if (!doctor) {
                 document.querySelector(".doctor-details").innerHTML = "<p>Doctor not found.</p>";
                 return;
             }
 
+            // Photo
+            if (doctor.docImageData) {
+                document.getElementById('doctor-photo').src = `data:${doctor.docImageType};base64,${doctor.docImageData}`;
+            }
 
-            // Doctor Info
-            document.getElementById("doctor-name").textContent = doctor.doctorName || "Unknown Name";
+            // Name
+            document.getElementById('doctor-name').textContent = doctor.docName || '';
 
             // Degrees
-            let degreeText = (doctor.degree && doctor.degree.length > 0)
-                ? "Degrees: " + doctor.degree.join(", ")
-                : (doctor.qualification && doctor.qualification.length > 0)
-                    ? "Degrees: " + doctor.qualification.join(", ")
-                    : (doctor.qualifications && doctor.qualifications.length > 0)
-                        ? "Degrees: " + doctor.qualifications.join(", ")
-                        : "No degrees listed";
+            document.getElementById('doctor-degree').innerHTML = (doctor.degrees || [])
+                .map(degree => `<span class="degree-tag">${degree}</span>`).join(' ');
 
             // Specializations
-            let specializationText = doctor.specialization && doctor.specialization.length > 0
-                ? "Specializations: " + doctor.specialization.join(", ")
-                : "No specialization listed";
+            document.getElementById('doctor-specialization').innerHTML = (doctor.specializations || [])
+                .map(spec => `<span class="tag">${spec}</span>`).join(' ');
 
-            // Show degrees and specializations together
-            document.getElementById("doctor-specialization").innerHTML = `${degreeText}<br>${specializationText}`;
+            // About
+            document.getElementById('doctor-about').textContent = doctor.about || '';
+
+            // Experience
+            document.getElementById('doctor-experience').textContent = doctor.experience ? `${doctor.experience} years` : '';
+
+            // Fee
+            document.getElementById('doctor-fee').textContent = doctor.fee || '';
+
+            // Contact
+            document.getElementById('doctor-contact').innerHTML = `
+              <div>Email: ${doctor.docEmail || ''}</div>
+              <div>Phone: ${doctor.docPhn || ''}</div>
+            `;
+
+            // Address (optional, if you have address fields)
+            document.getElementById('doctor-address').textContent = doctor.address || '';
 
             // Schedule
-            const scheduleContainer = document.querySelector(".doctor-schedule");
-            scheduleContainer.innerHTML = "<h2>Doctor's Schedule</h2>";
-
-            if (!doctor.schedule || doctor.schedule.length === 0) {
-                scheduleContainer.innerHTML += "<p>No schedule available.</p>";
-            } else {
-                doctor.schedule.forEach(day => {
-                    let dayElement = document.createElement("div");
-                    dayElement.classList.add("schedule-day");
-                    dayElement.innerHTML = `<h3>${day.scheduleDay || day.weekday || "Day"}</h3>`;
-
-                    if (day.timings && day.timings.length > 0) {
-                        day.timings.forEach(slot => {
-                            let slotElement = document.createElement("div");
-                            slotElement.classList.add("schedule-slot");
-                            slotElement.innerHTML = `
-                                <p>
-                                    <strong>Time:</strong> ${slot.timingRange || slot.timeRange || ""} <br>
-                                    <strong>City:</strong> ${slot.city || ""} <br>
-                                    <strong>Center:</strong> ${slot.center || ""}
-                                </p>
-                            `;
-                            dayElement.appendChild(slotElement);
-                        });
-                    } else {
-                        dayElement.innerHTML += "<p>No timings available.</p>";
-                    }
-
-                    scheduleContainer.appendChild(dayElement);
+            const scheduleDiv = document.getElementById('doctor-schedule');
+            scheduleDiv.innerHTML = '';
+            (doctor.schedules || []).forEach(day => {
+                const dayBlock = document.createElement('div');
+                dayBlock.className = 'schedule-day';
+                dayBlock.innerHTML = `<strong>${day.scheduleDay}:</strong>`;
+                const timingsList = document.createElement('ul');
+                (day.timings || []).forEach(t => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                      ${t.timingRange} (${t.center}, ${t.city}) - Max Patients: ${t.noOfPatients}
+                    `;
+                    timingsList.appendChild(li);
                 });
-            }
+                dayBlock.appendChild(timingsList);
+                scheduleDiv.appendChild(dayBlock);
+            });
         })
         .catch(error => {
             console.error("Error fetching doctor details:", error);
@@ -73,8 +73,23 @@ function showDoctorDetails() {
         });
 }
 
-// Call the function on page load
+// After your showDoctorDetails() function definition
+
+function fetchAllDoctorsAndShowSimilar() {
+    fetch('http://localhost:8080/doctor/all') // <-- Adjust endpoint if needed
+        .then(response => response.json())
+        .then(data => {
+            allDoctors = data;
+            showSimilarDoctors();
+        })
+        .catch(error => {
+            console.error("Error fetching all doctors:", error);
+        });
+}
+
+// Call this after loading the main doctor details
 showDoctorDetails();
+fetchAllDoctorsAndShowSimilar();
 
 // show similar doctors search by similar specialization
 function showSimilarDoctors() {
@@ -83,11 +98,15 @@ function showSimilarDoctors() {
         return;
     }
 
-    const doctorName = document.getElementById("doctor-name").textContent;
-    const doctorSpecialization = document.getElementById("doctor-specialization").textContent;
+    // Get current doctor's specializations as an array
+    const currentSpecs = Array.from(document.querySelectorAll('#doctor-specialization .tag')).map(tag => tag.textContent.trim());
+    const currentDoctorId = doctorId;
 
+    // Filter doctors with at least one matching specialization, excluding current doctor
     const similarDoctors = allDoctors.filter(doc => {
-        return doc.doctorName !== doctorName && doc.specialization && doc.specialization.some(spec => doctorSpecialization.includes(spec));
+        if (String(doc.docId) === String(currentDoctorId)) return false;
+        if (!doc.specializations) return false;
+        return doc.specializations.some(spec => currentSpecs.includes(spec));
     });
 
     const similarDoctorsList = document.getElementById("similar-doctors-list");
@@ -99,17 +118,91 @@ function showSimilarDoctors() {
     }
 
     similarDoctors.forEach(doctor => {
-        const doctorDiv = document.createElement("div");
-        doctorDiv.className = "doctor";
-        doctorDiv.innerHTML = `
-            <h3>${doctor.doctorName || "Unknown Name"}</h3>
-            <div>Specializations: ${doctor.specialization ? doctor.specialization.join(", ") : "No specialization listed"}</div>
+        const card = document.createElement("div");
+        card.className = "doctor-card";
+        card.innerHTML = `
+            <img src="${doctor.docImageData ? `data:${doctor.docImageType};base64,${doctor.docImageData}` : 'default-doctor.png'}" alt="Doctor Photo" class="doctor-card-photo">
+            <div class="doctor-card-info">
+                <h3>${doctor.docName || "Unknown Name"}</h3>
+                <div class="doctor-card-specializations">
+                    ${(doctor.specializations || []).map(spec => `<span>${spec}</span>`).join(' ')}
+                </div>
+                <div class="doctor-card-degree">Degrees: ${(doctor.degrees || []).join(', ')}</div>
+                <div class="doctor-card-experience">Experience: ${doctor.experience || 0} years</div>
+            </div>
         `;
-
-        doctorDiv.addEventListener("click", () => {
+        card.addEventListener("click", () => {
             window.location.href = `docDetail.html?docId=${doctor.docId}`;
         });
-
-        similarDoctorsList.appendChild(doctorDiv);
+        similarDoctorsList.appendChild(card);
     });
 }
+
+console.log("allDoctors:", allDoctors);
+
+allDoctors.forEach(doc => {
+    console.log(doc.docId, doc.specializations);
+});
+
+// // Example: fetch doctor details by ID (replace with actual doctor ID logic)
+// fetch('/api/doctors/1/details')
+//   .then(res => res.json())
+//   .then(data => {
+//     // Photo
+//     if (data.docImageData) {
+//       document.getElementById('doctor-photo').src = `data:${data.docImageType};base64,${data.docImageData}`;
+//     }
+
+//     // Name
+//     document.getElementById('doctor-name').textContent = data.docName || '';
+
+//     // Degrees
+//     document.getElementById('doctor-degree').textContent = (data.degrees || []).join(', ');
+
+//     // Specializations
+//     document.getElementById('doctor-specialization').innerHTML = (data.specializations || [])
+//       .map(spec => `<span class="tag">${spec}</span>`).join(' ');
+
+//     // About
+//     document.getElementById('doctor-about').textContent = data.about || '';
+
+//     // Experience
+//     document.getElementById('doctor-experience').textContent = data.experience ? `${data.experience} years` : '';
+
+//     // Fee
+//     document.getElementById('doctor-fee').textContent = data.fee || '';
+
+//     // Contact
+//     document.getElementById('doctor-contact').innerHTML = `
+//       <div>Email: ${data.docEmail || ''}</div>
+//       <div>Phone: ${data.docPhn || ''}</div>
+//     `;
+
+//     // Address (optional, if you have address fields)
+//     document.getElementById('doctor-address').textContent = data.address || '';
+
+//     // Schedule
+//     const scheduleDiv = document.getElementById('doctor-schedule');
+//     scheduleDiv.innerHTML = '';
+//     (data.schedules || []).forEach(day => {
+//       const dayBlock = document.createElement('div');
+//       dayBlock.className = 'schedule-day';
+//       dayBlock.innerHTML = `<strong>${day.scheduleDay}:</strong>`;
+//       const timingsList = document.createElement('ul');
+//       (day.timings || []).forEach(t => {
+//         const li = document.createElement('li');
+//         li.innerHTML = `
+//           ${t.timingRange} (${t.center}, ${t.city}) - Max Patients: ${t.noOfPatients}
+//         `;
+//         timingsList.appendChild(li);
+//       });
+//       dayBlock.appendChild(timingsList);
+//       scheduleDiv.appendChild(dayBlock);
+//     });
+//   })
+//   .catch(err => {
+//     // Handle error
+//     console.error('Failed to load doctor details', err);
+//   });
+
+

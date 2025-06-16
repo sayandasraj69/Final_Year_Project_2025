@@ -30,3 +30,46 @@ public class Schedule {
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Appointments> appointments;
 }
+
+// Schedule : [
+//      {
+//          "schId": ,
+//          "weekDay": ,
+//          "timings": [
+//                          {
+//                              "timingId": ,
+//                              "timeRange":,
+//                              "NoOfPatients:",
+//                              "city":,
+//                              "center":
+//                            },
+//                            {
+//                              "timingId": ,
+//                              "timeRange":,
+//                              "NoOfPatients:",
+//                              "city":,
+//                              "center":
+//                            }
+//          ]
+//      },
+//      {
+//          "schId": ,
+//          "weekDay": ,
+//          "timings": [
+//                          {
+//                              "timingId": ,
+//                              "timeRange":,
+//                              "NoOfPatients:",
+//                              "city":,
+//                              "center":
+//                            },
+//                            {
+//                              "timingId": ,
+//                              "timeRange":,
+//                              "NoOfPatients:",
+//                              "city":,
+//                              "center":
+//                            }
+//          ]
+//      }
+// ]

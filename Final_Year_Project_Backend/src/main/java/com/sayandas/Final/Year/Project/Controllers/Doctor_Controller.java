@@ -1,7 +1,9 @@
 package com.sayandas.Final.Year.Project.Controllers;
 
 import com.sayandas.Final.Year.Project.DTOs.DoctorDetailsDTO;
+import com.sayandas.Final.Year.Project.DTOs.ScheduleWithTimingsDTO;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Schedule;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
 import com.sayandas.Final.Year.Project.Services.Doctor_Service;
 import jakarta.validation.Valid;
@@ -94,6 +96,16 @@ public class Doctor_Controller {
         System.out.println(doctorDetails);
         if (doctorDetails != null) {
             return ResponseEntity.ok(doctorDetails);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/schedule/{doctorId}")
+    public ResponseEntity<List<ScheduleWithTimingsDTO>> getDoctorScheduleByDoctorId(@PathVariable Integer doctorId) {
+        List<ScheduleWithTimingsDTO> schedule = doctorService.getSchedulesByDoctorId(doctorId);
+        if (schedule != null && !schedule.isEmpty()) {
+            return new ResponseEntity<>(schedule, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
