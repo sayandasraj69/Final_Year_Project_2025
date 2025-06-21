@@ -111,6 +111,10 @@ public class Doctor_Service {
         return result;
     }
 
+    public List<Map<String, Object>> findMinorDetailsBySpecializations(List<String> specializations, Integer excludeDoctorId) {
+        return doctorRepository.findMinorDetails(specializations, excludeDoctorId);
+    }
+
     public List<Object> getAllSpecializationNames() {
         return specRepository.findAllSpecializations();
     }

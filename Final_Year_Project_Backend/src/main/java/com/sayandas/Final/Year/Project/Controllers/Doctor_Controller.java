@@ -110,4 +110,24 @@ public class Doctor_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping("/similar")
+    public ResponseEntity<List<Map<String, Object>>> getSimilarDoctors(@RequestBody Map<String, Object> request) {
+        List<String> specializations = (List<String>) request.get("specializations");
+        Object excludeDoctorIdObj = request.get("excludeDoctorId");
+        Integer excludeDoctorId = null;
+        if (excludeDoctorIdObj != null) {
+            if (excludeDoctorIdObj instanceof Number) {
+                excludeDoctorId = ((Number) excludeDoctorIdObj).intValue();
+            } else {
+                excludeDoctorId = Integer.parseInt(excludeDoctorIdObj.toString());
+            }
+        }
+        List<Map<String, Object>> doctors = doctorService.findMinorDetailsBySpecializations(specializations, excludeDoctorId);
+        if (!doctors.isEmpty()) {
+            return new ResponseEntity<>(doctors, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
 }

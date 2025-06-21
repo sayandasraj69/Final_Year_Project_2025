@@ -58,4 +58,12 @@ public interface DoctorRepository extends JpaRepository<Doctors,Integer> {
             "  WHERE (sFilter.specName) = (:specName)" +
             ")")
     List<Map<String, Object>> findBySpecName(@Param("specName") String specName);
+
+    @Query("SELECT d.docId AS docId, d.docName AS docName, d.docImageName AS docImageName, d.docImageType AS docImageType, d.docImageData AS docImageData, " +
+            "d.experience AS experience, s.specName AS specialization, q.qualName AS degree " +
+            "FROM Doctors d " +
+            "LEFT JOIN d.specializations s " +
+            "LEFT JOIN d.qualifications q " +
+            "WHERE d.docId <> :excludeDoctorId AND s.specName IN :specializations")
+    List<Map<String, Object>> findMinorDetails(@Param("specializations") List<String> specializations, @Param("excludeDoctorId") Integer excludeDoctorId);
 }
