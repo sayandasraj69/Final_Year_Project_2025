@@ -1,74 +1,75 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-  }
-  
-  header {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .auth-buttons button {
-    margin-left: 10px;
-    padding: 8px 15px;
-    background-color: white;
-    color: #4a90e2;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .auth-buttons button:hover {
-    background-color: #e6e6e6;
-  }
-  
-  .search-section {
-    text-align: center;
-    margin: 20px;
-  }
-  
-  /* specialization dropdown and search bar */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
 
-  .dropdown-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-    cursor: pointer;
-  }
+header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+}
 
-  #specialization-dropdown ,#searchBar {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 300px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  #search-button {
-     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  #search-button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Doctor cards container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auth-buttons button {
+  margin-left: 10px;
+  padding: 8px 15px;
+  background-color: white;
+  color: #4a90e2;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-buttons button:hover {
+  background-color: #e6e6e6;
+}
+
+.search-section {
+  text-align: center;
+  margin: 20px;
+}
+
+/* specialization dropdown and search bar */
+
+.dropdown-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+#specialization-dropdown,
+#searchBar {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#search-button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+#search-button:hover {
+  background-color: #0056b3;
+}
+
+/* Doctor cards container */
 #doctors-list {
   background: #f0f4f8;
   display: flex;
@@ -93,13 +94,573 @@ body {
   width: 500px;
   cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .doctor:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   transform: translateY(-4px) scale(1.03);
   background: #84c4e1;
 }
 
 
+/* Modal styles */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+  min-width: 300px;
+  text-align: center;
+}
+
+.modal select,
+.modal button {
+  margin: 1rem 0.5rem 0 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.modal-actions {
+  margin-top: 1rem;
+}
+
+/* Hero Section styles */
+.hero-section {
+  background: #588cc3;
+  color: #fff;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.hero-text {
+  flex: 1 1 0;
+  min-width: 300px;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content .highlight {
+  color: #ffd700;
+}
+
+.hero-btn {
+  background: #fff;
+  color: #007bff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.hero-image {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 900px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .hero-image {
+    max-width: 100%;
+  }
+}
+
+/* Services Section styles */
+.services-section {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.services-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.service-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 300px;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-icon {
+  margin-bottom: 1rem;
+}
+
+.service-icon img {
+  max-width: 100%;
+  height: auto;
+}
+
+.service-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.service-card p {
+  font-size: 0.875rem;
+  color: #555;
+}
+
+/* Appointment Section styles */
+.appointment-section {
+  background: #f5fafd;
+  padding: 3rem 2rem;
+  margin-top: 2rem;
+}
+
+.appointment-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.appointment-info {
+  flex: 1 1 350px;
+  min-width: 300px;
+}
+
+.appointment-info h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #007bff;
+}
+
+.appointment-info p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.appointment-info h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.appointment-info ul {
+  list-style: disc inside;
+  color: #444;
+  font-size: 1rem;
+  padding-left: 1rem;
+}
+
+.appointment-image {
+  flex: 1 1 300px;
+  min-width: 250px;
+  text-align: center;
+}
+
+.appointment-image img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 800px) {
+  .appointment-container {
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .appointment-image {
+    margin-top: 1.5rem;
+  }
+}
+
+/* Feedback Area - Improved Visuals */
+.feedback-section {
+  background: #f5fafd;
+  padding: 3rem 2rem 2rem 2rem;
+  margin-top: 2rem;
+}
+.feedback-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  max-width: 950px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.feedback-image img {
+  max-width: 280px;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  background: #fff;
+  padding: 0.5rem;
+  transition: transform 0.2s;
+}
+.feedback-image img:hover {
+  transform: scale(1.04) rotate(-2deg);
+}
+.feedback-form {
+  flex: 1 1 350px;
+  min-width: 300px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: stretch;
+}
+.feedback-form h2 {
+  color: #1976d2;
+  margin-bottom: 1.2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.feedback-form label {
+  font-weight: 600;
+  color: #1976d2;
+  font-size: 1.05rem;
+}
+.feedback-form input,
+.feedback-form textarea {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #c7e0f7;
+  font-size: 1.08rem;
+  background: #fafdff;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+  border: 1.5px solid #1976d2;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+}
+.feedback-form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.feedback-form button {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+}
+.feedback-form button:hover {
+  background: #125ea7;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.13);
+}
+#feedback-success {
+  display: none;
+  color: #1976d2;
+  margin-top: 1rem;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.08rem;
+  letter-spacing: 0.2px;
+}
+@media (max-width: 900px) {
+  .feedback-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+  .feedback-form {
+    width: 100%;
+    padding: 1.5rem 0.7rem;
+  }
+  .feedback-image img {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Contact Section */
+.contact-section {
+  background: #f5fafd;
+  padding: 3rem 2rem 2rem 2rem;
+  margin-top: 2rem;
+}
+
+.contact-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.contact-image img {
+  max-width: 260px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.contact-info {
+  flex: 1 1 320px;
+  min-width: 260px;
+}
+
+.contact-info h2 {
+  color: #1976d2;
+  margin-bottom: 1rem;
+}
+
+.contact-info p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+/* Footer Section */
+.footer-section {
+  background: #1976d2;
+  color: #fff;
+  padding: 2.5rem 1rem 1rem 1rem;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+  margin-top: 3rem;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1100px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.footer-brand h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  color: #ffd700;
+}
+
+.footer-brand p {
+  margin: 0.2rem 0;
+  font-size: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #ffd700;
+}
+
+.footer-newsletter h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.footer-newsletter form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.footer-newsletter input[type="email"] {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  min-width: 160px;
+}
+
+.footer-newsletter button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  background: #ffd700;
+  color: #1976d2;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.footer-newsletter button:hover {
+  background: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  color: #eaf6ff;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+
+  .contact-container,
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+}
+
+/* Add to the end of your style.css for page landing animations */
+
+/* Fade-in for main sections */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-section,
+.services-section,
+.appointment-section,
+.feedback-section,
+.footer-section {
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.hero-section { animation-delay: 0.1s; }
+.services-section { animation-delay: 0.1s; }
+.appointment-section { animation-delay: 0.1s; }
+.feedback-section { animation-delay: 0.7s; }
+.footer-section { animation-delay: 0.9s; }
+
+/* Animate navbar */
+.navbar {
+  opacity: 0;
+  animation: fadeInUp 0.8s 0.05s ease forwards;
+}
+
+/* Animate modal if needed */
+.modal {
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeInUp 0.7s 0.2s ease forwards;
+}
+
+/* Ensure animations only play on first load */
+body {
+  /* Prevent FOUC on load */
+  overflow-x: hidden;
+}
+
+/* Add this to your style.css for animated hero section paragraphs */
+@keyframes heroFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-text p,
+.hero-text h1,
+.hero-btn,
+.hero-image {
+  opacity: 0;
+  animation: heroFadeInUp 1s cubic-bezier(.4,1.4,.6,1) forwards;
+}
+
+.hero-text h1 { animation-delay: 0.1s; }
+.hero-text p:nth-of-type(1) { animation-delay: 0.3s; }
+.hero-text p:nth-of-type(2) { animation-delay: 0.5s; }
+.hero-text p:nth-of-type(3) { animation-delay: 0.7s; }
+.hero-btn { animation-delay: 0.9s; }
+.hero-image { animation-delay: 1.1s; }

@@ -6,41 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Doctor Appointment Booking</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Modal styles */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal {
-      background: #fff;
-      padding: 2rem 2.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
-      min-width: 300px;
-      text-align: center;
-    }
-
-    .modal select,
-    .modal button {
-      margin: 1rem 0.5rem 0 0.5rem;
-      padding: 0.5rem;
-      font-size: 1rem;
-    }
-
-    .modal-actions {
-      margin-top: 1rem;
-    }
-  </style>
+ 
 </head>
 
 <body>
@@ -55,6 +21,29 @@
   </header>
 
   <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-animate">Best Treatment for <span class="highlight">healthy life</span></h1>
+          <p class="hero-animate" style="animation-delay:0.2s;">
+            A community made for detailed patient experience and best practice healthcare. Remarkable results made simple,
+            so you can focus on living a more successful and healthy life.
+          </p>
+          <p class="hero-animate" style="animation-delay:0.4s;">
+            Book appointments with top doctors, get personalized care, and manage your health records all in one place.
+          </p>
+          <p class="hero-animate" style="animation-delay:0.6s;">
+            Your journey to better health starts here. Trust, convenience, and care—every step of the way.
+          </p>
+          <button class="hero-btn hero-animate" style="animation-delay:0.8s;">View All Services</button>
+        </div>
+        <div class="hero-image hero-animate" style="animation-delay:1s;">
+          <img src="prescripto_assets[1]/assets/assets_frontend/header_img.png" alt="Doctor Appointment">
+        </div>
+      </div>
+    </section>
+
     <!-- Modal for registration type -->
     <div class="modal-overlay" id="modalOverlay">
       <div class="modal">
@@ -70,6 +59,147 @@
         </div>
       </div>
     </div>
+
+    <!-- Services Section -->
+    <section class="services-section">
+      <div class="section-title">Medical & Consult Care</div>
+      <h2>Our Services</h2>
+      <div class="section-desc">
+        Access highly specialized care, guidance & service within every recognized medical field.<br>
+        Trigger a positive & healthy impact from the moment you browse.
+      </div>
+      <div class="services-cards">
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="prescripto_assets[1]/assets/assets_frontend/Dermatologist.svg"
+              alt="Dermatologist">
+          </div>
+          <h3>Dermatologist</h3>
+          <p>Get friendly, immediate care for your skin, hair, or nails from our specialist doctors. Available for
+            consultation online.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="prescripto_assets[1]/assets/assets_frontend/Gastroenterologist.svg"
+              alt="Gastroenterologist">
+          </div>
+          <h3>Gastroenterologist</h3>
+          <p>Expert care for digestive health and related concerns. Consult our specialists for advice and treatment.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="prescripto_assets[1]/assets/assets_frontend/General_physician.svg"
+              alt="General Physician">
+          </div>
+          <h3>General Physician</h3>
+          <p>Comprehensive checkups and medical advice for all ages. Your first point of contact for any health issue.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="prescripto_assets[1]/assets/assets_frontend/Gynecologist.svg"
+              alt="Gynecologist">
+          </div>
+          <h3>Gynecologist</h3>
+          <p>Specialized care for women’s health, from adolescence to menopause. Book your consultation today.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="prescripto_assets[1]/assets/assets_frontend/Neurologist.svg"
+              alt="Neurologist">
+          </div>
+          <h3>Neurologist</h3>
+          <p>Expert care for brain, spine, and nerve conditions. Consult our neurologists for diagnosis and treatment.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="prescripto_assets[1]/assets/assets_frontend/Pediatricians.svg"
+              alt="Pediatricians">
+          </div>
+          <h3>Pediatricians</h3>
+          <p>Specialized care for children’s health and development. Book appointments for your child’s well-being.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Appointment Section -->
+    <section class="appointment-section">
+      <div class="appointment-container">
+        <div class="appointment-info">
+          <h2>Doctor Appointments</h2>
+          <p>
+            Booking a doctor appointment is crucial for timely diagnosis, preventive care, and effective treatment. Regular consultations help you stay proactive about your health and address concerns before they become serious.
+          </p>
+          <h4>How to Book an Appointment:</h4>
+          <ul>
+            <li>Browse and select your preferred specialist or general physician.</li>
+            <li>Choose a suitable date and time for your visit or online consultation.</li>
+            <li>Fill in your details and confirm your appointment.</li>
+            <li>Receive instant confirmation and reminders for your booking.</li>
+          </ul>
+        </div>
+        <div class="appointment-image">
+          <img src="prescripto_assets[1]/assets/assets_frontend/about_image.png" alt="Doctor and patient">
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Area -->
+    <section class="feedback-section">
+      <div class="feedback-container">
+        <div class="feedback-image">
+          <img src="prescripto_assets[1]/assets/assets_frontend/contact_image.png" alt="Feedback">
+        </div>
+        <form class="feedback-form" id="feedbackForm">
+          <h2>We Value Your Feedback</h2>
+          <div class="form-group">
+            <label for="fb-name">Name</label>
+            <input type="text" id="fb-name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="fb-email">Email</label>
+            <input type="email" id="fb-email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="fb-message">Your Feedback</label>
+            <textarea id="fb-message" name="message" rows="4" required></textarea>
+          </div>
+          <button type="submit">Submit Feedback</button>
+          <div id="feedback-success" style="display:none;color:#1976d2;margin-top:1rem;">Thank you for your feedback!</div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h3>Prescripto Medical Center</h3>
+          <p>123 Anywhere St, Any City 12345</p>
+          <p>Phone: 123-456-7890 | Email: hello@prescripto.com</p>
+        </div>
+        <div class="footer-links">
+          <a href="#">About Us</a>
+          <a href="#">Departments</a>
+          <a href="#">Doctors</a>
+          <a href="#">Contact</a>
+          <a href="#">FAQ</a>
+        </div>
+        <div class="footer-newsletter">
+          <h4>Subscribe for Updates</h4>
+          <form>
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2025 Prescripto. All rights reserved.
+      </div>
+    </footer>
+
   </main>
 
   <script>
@@ -107,7 +237,17 @@
         regType.value = "";
       }
     });
+
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // You can add AJAX here to send data to your backend if needed
+      document.getElementById('feedback-success').style.display = 'block';
+      this.reset();
+    });
   </script>
+
+  
+  
 </body>
 
 </html>
