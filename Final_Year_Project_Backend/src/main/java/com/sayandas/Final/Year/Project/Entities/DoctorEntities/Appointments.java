@@ -21,6 +21,13 @@ public class Appointments {
     @JoinColumn(name = "docId")
     private Doctors doctor;
 
+    public Doctors getDoctors() {
+        return doctor;
+    }
+    public void setDoctors(Doctors doctor) {
+        this.doctor = doctor;
+    }
+
     @ManyToOne
     @JoinColumn(name = "schId")
     private Schedule schedule;

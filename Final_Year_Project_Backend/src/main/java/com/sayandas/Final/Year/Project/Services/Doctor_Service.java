@@ -1,14 +1,9 @@
 package com.sayandas.Final.Year.Project.Services;
 
 import com.sayandas.Final.Year.Project.DTOs.*;
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Qualifications;
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Schedule;
-import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
-import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.DoctorRepository;
-import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.QualRepository;
-import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.ScheduleRepository;
-import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.SpecRepository;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.*;
+import com.sayandas.Final.Year.Project.Entities.Users;
+import com.sayandas.Final.Year.Project.Repositories.DoctorRepositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +22,10 @@ public class Doctor_Service {
     QualRepository qualRepository;
     @Autowired
     ScheduleRepository scheduleRepository;
+    @Autowired
+    AppointmentsRepository appointmentsRepository;
+    @Autowired
+    UserRepository usersRepository;
 //    @Autowired
 //    SpecRepository specializationRepository;
 //    ObjectMapper objectMapper = new ObjectMapper();
@@ -224,5 +223,39 @@ public class Doctor_Service {
                         t.getCenter() != null ? t.getCenter().getCenName() : null
                 )).collect(Collectors.toList())
         )).collect(Collectors.toList());
+    }
+
+    // Doctor_Service.java
+
+    @Autowired
+    private NotificationService notificationService;
+
+    public Appointments bookAppointment(Appointments appointment) {
+        Users user = appointment.getUsers();
+        Users existingUser = usersRepository.findByUserPhn(user.getUserPhn());
+        if (existingUser == null) {
+            existingUser = usersRepository.save(user);
+        }
+        appointment.setUsers(existingUser);
+        Appointments saved = appointmentsRepository.save(appointment);
+
+        try {
+            if (existingUser.getUserEmail() != null && !existingUser.getUserEmail().isEmpty()) {
+                notificationService.sendEmail(
+                        existingUser.getUserEmail(),
+                        "Appointment Confirmation",
+                        "Your appointment with Dr. " + appointment.getDoctor().getDocName() + " is confirmed."
+                );
+            }
+            notificationService.sendSms(
+                    existingUser.getUserPhn(),
+                    "Your appointment with Dr. " + appointment.getDoctor().getDocName() + " is confirmed."
+            );
+        } catch (Exception e) {
+            System.err.println("Notification error: " + e.getMessage());
+            // Do not throw, just log
+        }
+
+        return saved;
     }
 }

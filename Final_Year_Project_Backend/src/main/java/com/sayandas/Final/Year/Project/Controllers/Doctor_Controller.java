@@ -2,6 +2,7 @@ package com.sayandas.Final.Year.Project.Controllers;
 
 import com.sayandas.Final.Year.Project.DTOs.DoctorDetailsDTO;
 import com.sayandas.Final.Year.Project.DTOs.ScheduleWithTimingsDTO;
+import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Appointments;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Doctors;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Schedule;
 import com.sayandas.Final.Year.Project.Entities.DoctorEntities.Specializations;
@@ -101,7 +102,7 @@ public class Doctor_Controller {
         }
     }
 
-    @GetMapping("/schedule/{doctorId}")
+        @GetMapping("/schedule/{doctorId}")
     public ResponseEntity<List<ScheduleWithTimingsDTO>> getDoctorScheduleByDoctorId(@PathVariable Integer doctorId) {
         List<ScheduleWithTimingsDTO> schedule = doctorService.getSchedulesByDoctorId(doctorId);
         if (schedule != null && !schedule.isEmpty()) {
@@ -128,6 +129,16 @@ public class Doctor_Controller {
             return new ResponseEntity<>(doctors, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @PostMapping("/book-appointment")
+    public ResponseEntity<Appointments> bookAppointment(@RequestBody Appointments appointment) {
+        try {
+            Appointments savedAppointment = doctorService.bookAppointment(appointment);
+            return new ResponseEntity<>(savedAppointment, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

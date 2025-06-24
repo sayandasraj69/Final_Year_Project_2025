@@ -41,7 +41,8 @@
                     <div class="info-title">Appointment Schedule</div>
                     <div id="doctor-schedule"></div>
                     <div id="doctor-fee-block">Fee: ₹<span id="doctor-fee"></span></div>
-                    <a href="apmntbook.html"><button class="book-btn">Book Appointment</button></a>
+                    <!-- Replace your existing Book Appointment button/link with this: -->
+                    <button id="bookApmntBtn">Book Appointment</button>
                 </div>
             </div>
             <div class="doctor-profile-right">
@@ -61,6 +62,23 @@
         <div id="similar-doctors-list"></div>
     </div>
     <script src="docdetails.js"></script>
+
+    <script>
+        // Get docId from URL
+        function getDoctorIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('docId');
+        }
+
+        document.getElementById('bookApmntBtn').addEventListener('click', function () {
+            const docId = getDoctorIdFromUrl();
+            if (docId) {
+                window.location.href = `apmntbook.html?docId=${docId}`;
+            } else {
+                alert("Doctor ID not found!");
+            }
+        });
+    </script>
 </body>
 
 </html>
