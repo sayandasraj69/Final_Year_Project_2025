@@ -102,7 +102,7 @@ public class Doctor_Controller {
         }
     }
 
-        @GetMapping("/schedule/{doctorId}")
+    @GetMapping("/schedule/{doctorId}")
     public ResponseEntity<List<ScheduleWithTimingsDTO>> getDoctorScheduleByDoctorId(@PathVariable Integer doctorId) {
         List<ScheduleWithTimingsDTO> schedule = doctorService.getSchedulesByDoctorId(doctorId);
         if (schedule != null && !schedule.isEmpty()) {

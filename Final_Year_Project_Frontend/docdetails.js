@@ -66,6 +66,8 @@ function showDoctorDetails() {
                 dayBlock.appendChild(timingsList);
                 scheduleDiv.appendChild(dayBlock);
             });
+
+            document.getElementById('book-appointment-btn').href = `apmntbook.html?docId=${doctorId}`;
         })
         .catch(error => {
             console.error("Error fetching doctor details:", error);
