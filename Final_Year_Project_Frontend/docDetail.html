@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CareConnect</title>
     <link rel="stylesheet" href="docDetail.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -62,6 +62,23 @@
         <div id="similar-doctors-list"></div>
     </div>
     <script src="docdetails.js"></script>
+
+    <script>
+        // Get docId from URL
+        function getDoctorIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('docId');
+        }
+
+        document.getElementById('bookApmntBtn').addEventListener('click', function () {
+            const docId = getDoctorIdFromUrl();
+            if (docId) {
+                window.location.href = `apmntbook.html?docId=${docId}`;
+            } else {
+                alert("Doctor ID not found!");
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -5,10 +5,10 @@ body {
   background-color: #f9f9f9;
 }
 
-header {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
+nav {
+  background-color: #ffffff;
+  color: rgb(0, 34, 255);
+  padding: 0px 12px 0px 12px;
 }
 
 .navbar {
@@ -16,6 +16,20 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+
+.navbar img {
+  width: 150px;
+  height: 38px;
+  object-fit: cover;
+  /* border-radius: 50%; */
+  /* margin-right: 12px; */
+  box-shadow: 0 2px 8px rgba(0,158,96,0.10);
+  /* background: #fff; */
+  /* border: 2px solid #baffd9; */
+  /* display: inline-block; */
+  /* vertical-align: middle; */
+}
+
 
 .auth-buttons button {
   margin-left: 10px;
@@ -357,19 +371,23 @@ header {
 .feedback-form {
   flex: 1 1 350px;
   min-width: 300px;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
-  padding: 2.5rem 2rem;
+  max-width: 300px;
+  height: 420px;
+  padding: 2.2rem 1rem;
+  font-size: 0.97rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 1.2rem;
   align-items: stretch;
+  max-width: 370px;
+  padding: 1.5rem 1rem;
+  font-size: 0.97rem;
 }
 .feedback-form h2 {
   color: #1976d2;
   margin-bottom: 1.2rem;
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 0.5px;
 }
@@ -399,16 +417,18 @@ header {
   box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
 }
 .feedback-form textarea {
-  min-height: 110px;
+  min-height: 50px;
+  max-height: 100px;
   resize: vertical;
+  font-size: 1rem;
 }
 .feedback-form button {
   background: #1976d2;
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 1rem 1.5rem;
-  font-size: 1.1rem;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   margin-top: 1rem;
@@ -444,44 +464,7 @@ header {
   }
 }
 
-/* Contact Section */
-.contact-section {
-  background: #f5fafd;
-  padding: 3rem 2rem 2rem 2rem;
-  margin-top: 2rem;
-}
 
-.contact-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  max-width: 1000px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-}
-
-.contact-image img {
-  max-width: 260px;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-}
-
-.contact-info {
-  flex: 1 1 320px;
-  min-width: 260px;
-}
-
-.contact-info h2 {
-  color: #1976d2;
-  margin-bottom: 1rem;
-}
-
-.contact-info p {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
 
 /* Footer Section */
 .footer-section {
@@ -614,10 +597,10 @@ header {
 }
 
 .hero-section { animation-delay: 0.1s; }
-.services-section { animation-delay: 0.1s; }
-.appointment-section { animation-delay: 0.1s; }
-.feedback-section { animation-delay: 0.7s; }
-.footer-section { animation-delay: 0.9s; }
+.services-section { animation-delay: 0.7s; }
+.appointment-section { animation-delay: 0.15s; }
+.feedback-section { animation-delay: 0.32s; }
+.footer-section { animation-delay: 0.45xs; }
 
 /* Animate navbar */
 .navbar {
@@ -664,3 +647,28 @@ body {
 .hero-text p:nth-of-type(3) { animation-delay: 0.7s; }
 .hero-btn { animation-delay: 0.9s; }
 .hero-image { animation-delay: 1.1s; }
+
+/* Add to your style.css for navbar links styling */
+.nav-links {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+.nav-links a {
+  color: #009e60;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.nav-links a:hover {
+  background: #e6f9f1;
+  color: #00794a;
+}
+@media (max-width: 600px) {
+  .nav-links {
+    gap: 0.5rem;
+  }
+}

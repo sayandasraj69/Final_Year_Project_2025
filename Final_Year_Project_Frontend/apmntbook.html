@@ -2,38 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment Booking</title>
+    <title>Book Appointment</title>
     <link rel="stylesheet" href="apmntBook.css">
+    <script>
+        let doctorId = null;
+        let schedulesData = [];
+
+        function getDoctorIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('docId');
+        }
+
+        async function loadSchedulesAndTimings() {
+            doctorId = getDoctorIdFromUrl();
+            if (!doctorId) {
+                alert("Doctor ID not found!");
+                return;
+            }
+            const scheduleSelect = document.getElementById('schedule');
+            const timingSelect = document.getElementById('timing');
+            scheduleSelect.innerHTML = '<option value="">Loading...</option>';
+            timingSelect.innerHTML = '<option value="">Select schedule first</option>';
+
+            // Fetch schedules (with timings)
+            const res = await fetch(`http://localhost:8080/doctor/schedule/${doctorId}`);
+            schedulesData = await res.json();
+
+            scheduleSelect.innerHTML = '<option value="">Select schedule</option>';
+            schedulesData.forEach(sch => {
+                scheduleSelect.innerHTML += `<option value="${sch.schId}">${sch.weekDay}</option>`;
+            });
+
+            // When schedule changes, populate timings from local data
+            scheduleSelect.addEventListener('change', function() {
+                const schId = parseInt(this.value);
+                const selectedSchedule = schedulesData.find(s => s.schId === schId);
+                timingSelect.innerHTML = '';
+                if (!selectedSchedule || !selectedSchedule.timings || selectedSchedule.timings.length === 0) {
+                    timingSelect.innerHTML = '<option value="">No timings available</option>';
+                    return;
+                }
+                timingSelect.innerHTML = '<option value="">Select timing</option>';
+                selectedSchedule.timings.forEach(t => {
+                    timingSelect.innerHTML += `<option value="${t.timingId}">${t.timeRange} | ${t.center}, ${t.city}</option>`;
+                });
+            });
+        }
+
+        async function submitAppointment(event) {
+            event.preventDefault();
+            const userName = document.getElementById('userName').value;
+            const userEmail = document.getElementById('userEmail').value;
+            const userPhn = document.getElementById('userPhn').value;
+            const schId = document.getElementById('schedule').value;
+            const timingId = document.getElementById('timing').value;
+
+            if (!userName || !userPhn || !schId || !timingId) {
+                alert("Please fill all required fields!");
+                return;
+            }
+
+            const payload = {
+                doctor: { docId: doctorId },
+                schedule: { schId: schId },
+                timing: { timingId: timingId },
+                users: {
+                    userName: userName,
+                    userEmail: userEmail,
+                    userPhn: userPhn
+                }
+            };
+
+            const res = await fetch('http://localhost:8080/doctor/book-appointment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    doctor: { docId: Number(doctorId) },
+                    schedule: { schId: Number(schId) },
+                    timing: { timingId: Number(timingId) },
+                    users: {
+                        userName: userName,
+                        userEmail: userEmail,
+                        userPhn: userPhn
+                    }
+                })
+            });
+
+            if (res.ok) {
+                alert("Appointment booked successfully!");
+                window.location.href = "success.html";
+            } else {
+                alert("Failed to book appointment.");
+            }
+        }
+
+        window.onload = loadSchedulesAndTimings;
+    </script>
 </head>
 <body>
-    <div class="appointment-wrapper">
-        <div class="appointment-image">
-            <img src="prescripto_assets[1]/assets/assets_frontend/contact_image.png" alt="Doctor" />
+    <div class="appointment-main-container">
+        <div class="appointment-img-block">
+            <img src="prescripto_assets[1]/assets/assets_frontend/appointment_img.png" alt="Appointment">
         </div>
-        <div class="appointment-form-section">
-            <h1>Book an Appointment</h1>
-            <form id="appointmentForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="user">Name</label>
-                        <input type="text" id="user" name="user" placeholder="Enter your name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="date">Date</label>
-                        <input type="date" id="date" name="date" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="time">Time</label>
-                        <input type="time" id="time" name="time" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="doctor">Doctor</label>
-                        <input type="text" id="doctor" name="doctor" placeholder="Doctor's Name">
-                    </div>
-                </div>
+        <div class="appointment-form-block">
+            <h1>Book Appointment</h1>
+            <form id="apmntForm" onsubmit="submitAppointment(event)">
+                <label for="userName">Name:</label>
+                <input type="text" id="userName" required><br><br>
+
+                <label for="userEmail">Email (optional):</label>
+                <input type="email" id="userEmail"><br><br>
+
+                <label for="userPhn">Phone:</label>
+                <input type="text" id="userPhn" required><br><br>
+
+                <label for="schedule">Schedule (Weekday):</label>
+                <select id="schedule" required></select><br><br>
+
+                <label for="timing">Timing:</label>
+                <select id="timing" required></select><br><br>
+
                 <button type="submit">Book Appointment</button>
             </form>
         </div>
