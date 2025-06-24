@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Appointment</title>
+    <link rel="stylesheet" href="apmntBook.css">
     <script>
         let doctorId = null;
         let schedulesData = [];
@@ -99,24 +100,31 @@
     </script>
 </head>
 <body>
-    <h2>Book Appointment</h2>
-    <form id="apmntForm" onsubmit="submitAppointment(event)">
-        <label for="userName">Name:</label>
-        <input type="text" id="userName" required><br><br>
+    <div class="appointment-main-container">
+        <div class="appointment-img-block">
+            <img src="prescripto_assets[1]/assets/assets_frontend/appointment_img.png" alt="Appointment">
+        </div>
+        <div class="appointment-form-block">
+            <h1>Book Appointment</h1>
+            <form id="apmntForm" onsubmit="submitAppointment(event)">
+                <label for="userName">Name:</label>
+                <input type="text" id="userName" required><br><br>
 
-        <label for="userEmail">Email (optional):</label>
-        <input type="email" id="userEmail"><br><br>
+                <label for="userEmail">Email (optional):</label>
+                <input type="email" id="userEmail"><br><br>
 
-        <label for="userPhn">Phone:</label>
-        <input type="text" id="userPhn" required><br><br>
+                <label for="userPhn">Phone:</label>
+                <input type="text" id="userPhn" required><br><br>
 
-        <label for="schedule">Schedule (Weekday):</label>
-        <select id="schedule" required></select><br><br>
+                <label for="schedule">Schedule (Weekday):</label>
+                <select id="schedule" required></select><br><br>
 
-        <label for="timing">Timing:</label>
-        <select id="timing" required></select><br><br>
+                <label for="timing">Timing:</label>
+                <select id="timing" required></select><br><br>
 
-        <button type="submit">Book Appointment</button>
-    </form>
+                <button type="submit">Book Appointment</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
